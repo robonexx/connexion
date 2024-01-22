@@ -79,11 +79,12 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
       };
 
   return (
-    <div>
-      <form
-        onSubmit={handleSubmit}
-        className='bg-gray-100 p-6 rounded-md w-full md:w-2/5 md:mx-auto'
-      >
+    <div className='max-w-2xl rounded-md border-gray-500 border-[1px] py-10 px-5 m-auto w-full mt-10'>
+    <h2>Sign up</h2>
+<form
+  onSubmit={handleSubmit}
+  className='bg-transparent p-6 rounded-md md:max-w-2/5 md:mx-auto'
+>
         <div className='mb-4'>
           <label
             htmlFor='fullname'
