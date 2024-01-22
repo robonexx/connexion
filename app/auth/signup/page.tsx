@@ -20,6 +20,7 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [error, setError] = useState('');
+  const [isInProgress, setIsInProgress] = useState(false);
   const [user, setUser] = useState({
     fullname: '',
     username: '',
@@ -27,7 +28,7 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
     password: '',
     confirmPassword: '',
     startYear: '',
-    role: 'Student' || 'Teacher',
+    role: 'student' || 'teacher',
   });
 
   const [passwordMatchError, setPasswordMatchError] = useState('');
@@ -40,6 +41,7 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
   };
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
+    setIsInProgress(true);
     e.preventDefault();
     setLoading(true);
 
@@ -49,39 +51,46 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
     } else {
       setPasswordMatchError('');
     }
+    // Remove confirmPassword from user object
+    const { confirmPassword, ...userDataWithoutConfirmPassword } = user;
 
     try {
       if (
-        !user.username ||
-        !user.email ||
-        !user.password ||
-        !user.confirmPassword
+        !userDataWithoutConfirmPassword.username ||
+        !userDataWithoutConfirmPassword.email ||
+        !userDataWithoutConfirmPassword.password
       ) {
         setError('Please fill all the fields');
         return;
       }
 
       const emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
-      if (!emailRegex.test(user.email)) {
+      if (!emailRegex.test(userDataWithoutConfirmPassword.email)) {
         setError('Invalid email id');
         return;
       }
 
-      const res = await fetch('/api/auth/register', {
+      const res = await fetch('/api/auth/users', {
         method: 'POST',
-        body: JSON.stringify(user),
+        body: JSON.stringify(userDataWithoutConfirmPassword),
       }).then((res) => res.json());
 
-      console.log('API response:', res);
-
-      if (res.status === 200 || res.status === 201) {
+      const parsedResponse = await res.json();
+      console.log('API response:', parsedResponse);
+      setIsInProgress(false);
+     
+      if (res.ok) {
         console.log('User added successfully');
         setError('');
         router.push('/');
+      } else {
+        // Log additional information from the response
+        console.error('Unexpected response:', parsedResponse);
+        setError('Unexpected response from the server');
       }
     } catch (error) {
-      console.error(error);
-      setError('');
+      console.error('Error during API request:', error);
+      setError('An error occurred during the request');
     } finally {
       setLoading(false);
 
@@ -180,13 +189,13 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
             onChange={handleInputChange}
           >
             <option
-              value='Teacher'
+              value='teacher'
               className='text-gray-600 text-xs bg-transparent rounded-none'
             >
               Teacher
             </option>
             <option
-              value='Student'
+              value='student'
               className='text-gray-600 text-xs bg-transparent'
             >
               Student
@@ -207,6 +216,7 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
         <button
           type='submit'
           className='bg-transparent border-[1px] text-white p-2 rounded-md hover:bg-slate-700 transition-all ease-in-out duration-300'
+          disabled={isInProgress}
         >
           Sign Up
         </button>

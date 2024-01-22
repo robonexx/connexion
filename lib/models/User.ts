@@ -7,7 +7,7 @@ interface IUser extends Document {
   email: string;
   password: string;
   image?: string;
-    role: 'Admin' | 'Teacher' | 'Student';
+    role: 'admin' | 'teacher' | 'student';
     desc?: string;
   fullname?: string;
   createdAt: Date;
@@ -47,7 +47,6 @@ const UserSchema = new Schema<IUser, {}, Methods>(
     password: {
       type: String,
       required: true,
-      select: false,
     },
     image: {
       type: String,
@@ -56,7 +55,8 @@ const UserSchema = new Schema<IUser, {}, Methods>(
     },
     role: {
       type: String,
-      default: 'Student',
+      enum: ['admin', 'teacher', 'student'],
+      default: 'student',
     },
     desc: {
       type: String,

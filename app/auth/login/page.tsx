@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import { signIn, useSession } from 'next-auth/react';
 import { Input } from '@/components/input-field/InputField';
 import { useRouter } from 'next/navigation';
@@ -17,7 +17,8 @@ const LoginPage: React.FC<LoginFormProps> = ({ onSubmit }) => {
     password: '',
   });
 
-  const handleInputChange = (event: any) => {
+  const handleInputChange: ChangeEventHandler<
+  HTMLInputElement> = (event: any) => {
     const { name, value } = event.target;
     setUser((prev) => {
       console.log({ ...prev, [name]: value });
@@ -25,7 +26,7 @@ const LoginPage: React.FC<LoginFormProps> = ({ onSubmit }) => {
     });
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement>= async (e: any) => {
     e.preventDefault();
     setLoading(true);
     try {
@@ -45,6 +46,7 @@ const LoginPage: React.FC<LoginFormProps> = ({ onSubmit }) => {
       if (res?.error) {
         console.log('Authentication error:', res.error);
         setError(res.error);
+        router.replace("/profile")
       }
       console.log('submitted form');
       setError('');
