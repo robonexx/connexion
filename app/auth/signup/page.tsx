@@ -98,7 +98,7 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
   };
 
   return (
-    <div className='max-w-2xl rounded-md border-gray-500 border-[1px] py-10 px-5 m-auto w-full mt-10'>
+    <div className='max-w-xl rounded-md border-gray-500 border-[1px] py-10 px-5 m-auto w-full mt-10'>
       <h2 className='w-fit'>
         Sign up
         <span className='block w-full transition-all duration-500 h-0.5 bg-[#ff4040]'></span>
