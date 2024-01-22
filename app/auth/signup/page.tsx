@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Input } from '@/components/input-field/InputField';
 
@@ -25,45 +25,62 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
     username: '',
     email: '',
     password: '',
+    confirmPassword: '',
     startYear: '',
     role: 'Student' || 'Teacher',
   });
 
-  const handleInputChange = (event: any) => {
-    const { name, value } = event.target;
+  const [passwordMatchError, setPasswordMatchError] = useState('');
+
+  const handleInputChange: ChangeEventHandler<
+    HTMLInputElement | HTMLSelectElement
+  > = ({ target }) => {
+    const { name, value } = target;
     setUser((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log(user);
+
+    if (user.password !== user.confirmPassword) {
+      setPasswordMatchError("Passwords don't match");
+      return;
+    } else {
+      setPasswordMatchError('');
+    }
+
     try {
       if (
         !user.username ||
         !user.email ||
         !user.password ||
-        !user.fullname ||
-        !user.startYear ||
-        !user.role
+        !user.confirmPassword
       ) {
-        setError('please fill all the fields');
+        setError('Please fill all the fields');
         return;
       }
+
       const emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
       if (!emailRegex.test(user.email)) {
-        setError('invalid email id');
+        setError('Invalid email id');
         return;
       }
-      const res = await axios.post('/api/register', user);
-      console.log(res.data);
-      if (res.status == 200 || res.status == 201) {
-        console.log('user added successfully');
+
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        body: JSON.stringify(user),
+      }).then((res) => res.json());
+
+      console.log('API response:', res);
+
+      if (res.status === 200 || res.status === 201) {
+        console.log('User added successfully');
         setError('');
         router.push('/');
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       setError('');
     } finally {
       setLoading(false);
@@ -73,6 +90,7 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
         username: '',
         email: '',
         password: '',
+        confirmPassword: '',
         startYear: '',
         role: '',
       });
@@ -81,8 +99,9 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
 
   return (
     <div className='max-w-2xl rounded-md border-gray-500 border-[1px] py-10 px-5 m-auto w-full mt-10'>
-      <h2 className='w-fit'>Sign up
-      <span className='block w-full transition-all duration-500 h-0.5 bg-[#ff4040]'></span>
+      <h2 className='w-fit'>
+        Sign up
+        <span className='block w-full transition-all duration-500 h-0.5 bg-[#ff4040]'></span>
       </h2>
       <form
         onSubmit={handleSubmit}
@@ -105,6 +124,18 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
             id='username'
             name='username'
             labelValue='username'
+            required={true}
+            handleChange={handleInputChange}
+          />
+        </div>
+        <div className='mb-4'>
+          <Input
+            htmlFor='email'
+            type='email'
+            id='email'
+            name='email'
+            labelValue='Email'
+            required={true}
             handleChange={handleInputChange}
           />
         </div>
@@ -115,18 +146,23 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
             id='password'
             labelValue='********'
             type='password'
+            required={true}
             handleChange={handleInputChange}
           />
         </div>
         <div className='mb-4'>
           <Input
-            htmlFor='confirmpassword'
-            name='confirmpassword'
-            id='confirmpassword'
+            htmlFor='confirmPassword'
+            name='confirmPassword'
+            id='confirmPassword'
             labelValue='Confirm Password'
-            type='confirmpassword'
+            type='password'
+            required={true}
             handleChange={handleInputChange}
           />
+          {passwordMatchError && (
+            <p className='text-red-500 text-sm mt-1'>{passwordMatchError}</p>
+          )}
         </div>
         <div className='mb-4'>
           <label
@@ -140,6 +176,7 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
             name='role'
             className='mt-1 p-2 w-full border rounded-md bg-transparent text-xs font-thin'
             value={user.role}
+            required={false}
             onChange={handleInputChange}
           >
             <option
@@ -163,6 +200,7 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
             id='startYear'
             name='startYear'
             labelValue='Start Year'
+            required={false}
             handleChange={handleInputChange}
           />
         </div>

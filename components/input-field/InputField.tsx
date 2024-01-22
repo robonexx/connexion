@@ -5,7 +5,8 @@ type InputFieldType = {
   id: string;
   labelValue: string;
   name: string;
-  type: string;
+    type: string;
+    required?: boolean;
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -14,7 +15,8 @@ export const Input = ({
   id,
   labelValue,
   name,
-  type,
+    type,
+  required,
   handleChange,
 }: InputFieldType) => {
   return (
@@ -24,7 +26,8 @@ export const Input = ({
         className="mt-1 p-2 w-full border rounded-md bg-transparent placeholder:text-xs"
         type={type}
         id={id}
-        name={name}
+              name={name}
+              required={required}
         onChange={handleChange}
         placeholder={labelValue}
       />
