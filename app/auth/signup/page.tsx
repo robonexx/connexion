@@ -1,5 +1,6 @@
-// components/SignupForm.tsx
+'use client';
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface SignupFormProps {
   onSubmit: (data: FormData) => void;
@@ -15,128 +16,183 @@ interface FormData {
 }
 
 const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
-  const [formData, setFormData] = useState<FormData>({
-    fullname: '',
-    username: '',
-    password: '',
-    confirmPassword: '',
-    role: 'Student',
-    startYear: 2022,
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit(formData);
-  };
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
+    const [error, setError] = useState('');
+    const [user, setUser] = useState({
+        fullname: '',
+        username: '',
+        email: '',
+        password: '',
+        startYear: '',
+        role: 'Teacher' || 'Student'
+      });
+    
+      const handleInputChange = (event: any) => {
+        const { name, value } = event.target;
+        setUser((prev) => ({ ...prev, [name]: value }));
+      };
+    
+      const handleSubmit = async (e: any) => {
+        e.preventDefault();
+        setLoading(true);
+        console.log(user);
+        try {
+          if (
+            !user.username ||
+            !user.email ||
+            !user.password ||
+            !user.fullname ||
+              !user.startYear ||
+              !user.role
+          ) {
+            setError('please fill all the fields');
+            return;
+          }
+          const emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
+          if (!emailRegex.test(user.email)) {
+            setError('invalid email id');
+            return;
+          }
+          const res = await axios.post('/api/register', user);
+          console.log(res.data);
+          if (res.status == 200 || res.status == 201) {
+            console.log('user added successfully');
+            setError('');
+            router.push('/');
+          }
+        } catch (error) {
+          console.log(error);
+          setError('');
+        } finally {
+          setLoading(false);
+    
+          setUser({
+            fullname: '',
+            username: '',
+            email: '',
+            password: '',
+              startYear: '',
+            role: ''
+          });
+        }
+      };
 
   return (
-    <form onSubmit={handleSubmit} className='bg-gray-100 p-6 rounded-md'>
-      <div className='mb-4'>
-        <label
-          htmlFor='fullname'
-          className='block text-sm font-medium text-gray-600'
-        >
-          Full Name
-        </label>
-        <input
-          type='text'
-          id='fullname'
-          className='mt-1 p-2 w-full border rounded-md'
-          value={formData.fullname}
-          onChange={(e) =>
-            setFormData({ ...formData, fullname: e.target.value })
-          }
-        />
-      </div>
-      <div className='mb-4'>
-        <label
-          htmlFor='username'
-          className='block text-sm font-medium text-gray-600'
-        >
-          Username
-        </label>
-        <input
-          type='text'
-          id='username'
-          className='mt-1 p-2 w-full border rounded-md'
-          value={formData.username}
-          onChange={(e) =>
-            setFormData({ ...formData, username: e.target.value })
-          }
-        />
-      </div>
-      <div className='mb-4'>
-        <label
-          htmlFor='password'
-          className='block text-sm font-medium text-gray-600'
-        >
-          Password
-        </label>
-        <input
-          type='password'
-          id='password'
-          className='mt-1 p-2 w-full border rounded-md'
-          value={formData.password}
-          onChange={(e) =>
-            setFormData({ ...formData, password: e.target.value })
-          }
-        />
-      </div>
-      <div className='mb-4'>
-        <label
-          htmlFor='confirmPassword'
-          className='block text-sm font-medium text-gray-600'
-        >
-          Confirm Password
-        </label>
-        <input
-          type='password'
-          id='confirmPassword'
-          className='mt-1 p-2 w-full border rounded-md'
-          value={formData.confirmPassword}
-          onChange={(e) =>
-            setFormData({ ...formData, confirmPassword: e.target.value })
-          }
-        />
-      </div>
-      <div className='mb-4'>
-        <label
-          htmlFor='role'
-          className='block text-sm font-medium text-gray-600'
-        >
-          Role
-        </label>
-        <select
-          id='role'
-          className='mt-1 p-2 w-full border rounded-md'
-          value={formData.role}
-          onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-        >
-          <option value='Teacher'>Teacher</option>
-          <option value='Student'>Student</option>
-        </select>
-      </div>
-      <div className='mb-4'>
-        <label
-          htmlFor='startYear'
-          className='block text-sm font-medium text-gray-600'
-        >
-          Start Year
-        </label>
-        <input
-          type='number'
-          id='startYear'
-          className='mt-1 p-2 w-full border rounded-md'
-          value={formData.startYear}
-          onChange={(e) =>
-            setFormData({ ...formData, startYear: Number(e.target.value) })
-          }
-        />
-      </div>
-      <button type='submit' className='bg-blue-500 text-white p-2 rounded-md'>
-        Sign Up
-      </button>
-    </form>
+    <div>
+      <form
+        onSubmit={handleSubmit}
+        className='bg-gray-100 p-6 rounded-md w-full md:w-2/5 md:mx-auto'
+      >
+        <div className='mb-4'>
+          <label
+            htmlFor='fullname'
+            className='block text-sm font-medium text-gray-600'
+          >
+            Full Name
+          </label>
+          <input
+            type='text'
+            id='fullname'
+            name='fullname'
+            className='mt-1 p-2 w-full border rounded-md'
+            value={user.fullname}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className='mb-4'>
+          <label
+            htmlFor='username'
+            className='block text-sm font-medium text-gray-600'
+          >
+            Username
+          </label>
+          <input
+            type='text'
+            id='username'
+            name='username'
+            className='mt-1 p-2 w-full border rounded-md'
+            value={user.username}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className='mb-4'>
+          <label
+            htmlFor='password'
+            className='block text-sm font-medium text-gray-600'
+          >
+            Password
+          </label>
+          <input
+            type='password'
+            id='password'
+            name='password'
+            className='mt-1 p-2 w-full border rounded-md'
+            value={user.password}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className='mb-4'>
+          <label
+            htmlFor='confirmPassword'
+            className='block text-sm font-medium text-gray-600'
+          >
+            Confirm Password
+          </label>
+          <input
+            type='password'
+            id='confirmPassword'
+            name='confirmPassword'
+            className='mt-1 p-2 w-full border rounded-md'
+            value={user.confirmPassword}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className='mb-4'>
+          <label
+            htmlFor='role'
+            className='block text-sm font-medium text-gray-600'
+          >
+            Role
+          </label>
+          <select
+            id='role'
+            name='role'
+            className='mt-1 p-2 w-full border rounded-md block mb-2 text-sm font-medium text-gray-900 dark:text-white'
+            value={user.role}
+            onChange={handleInputChange}
+          >
+            <option value={'false'} className='text-gray-600'>
+              role?
+            </option>
+            <option value='Teacher' className='text-gray-600'>
+              Teacher
+            </option>
+            <option value='Student' className='text-gray-600'>
+              Student
+            </option>
+          </select>
+        </div>
+        <div className='mb-4'>
+          <label
+            htmlFor='startYear'
+            className='block text-sm font-medium text-gray-600'
+          >
+            Start Year
+          </label>
+          <input
+            type='number'
+            id='startYear'
+            className='mt-1 p-2 w-full border rounded-md'
+            value={user.startYear}
+            onChange={handleInputChange}
+          />
+        </div>
+        <button type='submit' className='bg-blue-500 text-white p-2 rounded-md'>
+          Sign Up
+        </button>
+      </form>
+    </div>
   );
 };
 
