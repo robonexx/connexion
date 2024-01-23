@@ -1,13 +1,15 @@
 import { connectToDB } from "@/lib/db";
 import User from "@/lib/models/User";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { NextResponse, NextRequest } from "next/server";
 
 connectToDB();
 
 export async function POST(request: NextRequest) {
+
+  const body = await request.json()
   try {
-    const { fullname, username, email, password, startYear } = await request.json();
+    const { fullname, username, email, password, startYear } = body
 
     const userEmail = await User.findOne({ email });
     const userUsername = await User.findOne({ username });
@@ -37,7 +39,7 @@ export async function POST(request: NextRequest) {
     });
 
     const savedUser = await newUser.save();
-
+    console.log('new user saved', savedUser)
     return NextResponse.json({
       message: "User created successfully",
       success: true,

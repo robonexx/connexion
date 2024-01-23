@@ -2,6 +2,7 @@
 import React, { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Input } from '@/components/input-field/InputField';
+import ErrorMessage from '@/components/error-msg/ErrorMessage';
 
 interface SignupFormProps {
   onSubmit: (data: FormData) => void;
@@ -13,7 +14,7 @@ interface FormData {
   password: string;
   confirmPassword: string;
   role: string;
-  startYear: number;
+  startYear?: number;
 }
 
 const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
@@ -70,19 +71,19 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
         return;
       }
 
-      const res = await fetch('/api/auth/users', {
+      const res = await fetch('/api/auth/register', {
         method: 'POST',
         body: JSON.stringify(userDataWithoutConfirmPassword),
-      }).then((res) => res.json());
-
+      });
+      
       const parsedResponse = await res.json();
       console.log('API response:', parsedResponse);
       setIsInProgress(false);
-     
+
       if (res.ok) {
         console.log('User added successfully');
         setError('');
-        router.push('/');
+        router.push('/auth/login');
       } else {
         // Log additional information from the response
         console.error('Unexpected response:', parsedResponse);
@@ -213,9 +214,11 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
             handleChange={handleInputChange}
           />
         </div>
+        {error ? <ErrorMessage message={error} /> : <div></div>}
+
         <button
           type='submit'
-          className='bg-transparent border-[1px] text-white p-2 rounded-md hover:bg-slate-700 transition-all ease-in-out duration-300'
+          className='bg-transparent border-[1px] text-white p-2 rounded-md hover:bg-slate-700 transition-all ease-in-out duration-300 cursor-pointer'
           disabled={isInProgress}
         >
           Sign Up

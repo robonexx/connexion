@@ -1,97 +1,62 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
-import CredentialsProvider from 'next-auth/providers/credentials';
-import bcrypt from 'bcrypt';
-import UserModel from "@/lib/models/User";
-import { connectToDB } from '@/lib/db';
+import NextAuth, {AuthOptions} from "next-auth";
+import Credentials from "next-auth/providers/credentials";
+import { compare } from "bcryptjs";
 
-export const authOptions: NextAuthOptions = {
+import { connectToDB } from "@/lib/db";
+import User from "@/lib/models/User";
+import { signIn } from "next-auth/react";
 
-    session: {
-        strategy: 'jwt',
-    },
-    
-    providers: [
-        CredentialsProvider({
-          type: 'credentials',
-          credentials: {
-            username: {
-              label: 'Username',
-              type: 'text',
-              placeholder: 'Your user name',
-            },
-            password: {
-              label: 'Password',
-              type: 'password',
-              placeholder: 'Your password',
-            },
-          },
-          async authorize(credentials, req) {
-            try {
-              const { username, password } = credentials as {
-                username: string;
-                password: string;
-              };
-          
-          
-              console.log('credentials: ', credentials);
-          
-              await connectToDB();
-              const user = await UserModel.findOne({ username });
-          
-              if (!user) {
-                // Returning an object with an error property to indicate authentication failure
-                return { error: 'No user found' };
-              } else {
-                console.log('user from authorize: ', user);
-              }                    
-          
-             const passwordIsMatch = await user.comparePassword(password)
-              
-              if (!passwordIsMatch) {
-                // Returning an object with an error property to indicate authentication failure
-                return { error: 'password is not matching' };
-              }         
-          
-              // Returning the user object on successful authentication
-              console.log('user from authorize after compare: ', user);
-              return {
-                name: user.username,
-                email: user.email,
-                role: user.role,
-                id: user._id
-              }
-            } catch (error) {
-              console.error('Error:', error);
-              // Returning an object with an error property to indicate authentication failure
-              return { error: 'Internal server error' };
-            }
-          }
-        }),
-      ],
-    
-     
-    
-      callbacks: {
-        async jwt(params: any) {
-          if (params.user?.user.role) {
-            params.token.email = params.user.email;
-              params.token.name = params.user.username;
-              params.token.role = params.user.role;
-              params.token.id = params.user._id;
-          }
-          return params.token
-        },
-        async session({ session, token }) {
-          if (session.user) {
-            (session.user as { id: string}).id = token.id as string
-            (session.user as { role: string}).role = token.role as string
-          }
-          return session;
+export const authOptions: AuthOptions = {
+  providers: [
+    Credentials({
+      name: "credentials",
+      credentials: {
+        username: { label: "Username", type: "text" },
+        password: { label: "Password", type: "password" }
+      },
+      async authorize(credentials) {
+        if (!credentials?.username || !credentials?.password) {
+          throw new Error("Missing credentials");
         }
-  },
+
+        await connectToDB()
+
+        const user = await User.findOne({ username: credentials.username });
+
+        if (!user || !user?.password) {
+          throw new Error("Invalid email or password");
+        }
+
+        const isMatch = await compare(credentials.password, user.password);
+
+        if (!isMatch) {
+          throw new Error("Invalid password");
+        }
+
+        return user
+      },
+    }),
+  ],
+
   secret: process.env.NEXTAUTH_SECRET,
-}
+  session: {
+    strategy: "jwt"
+  },
 
-const authHandler = NextAuth(authOptions)
+  debug: process.env.NODE_ENV === 'development',
 
-export {authHandler as GET, authHandler as POST}
+  callbacks: {
+    async session({ session }) {
+      const mongodbUser = await User.findOne({ username: session.user.username })
+      session.user.id = mongodbUser._id.toString()
+
+      session.user = { ...session.user, ...mongodbUser._doc }
+
+      return session
+    }
+  }
+};
+
+const handler = NextAuth(authOptions);
+
+export { handler as GET, handler as POST };

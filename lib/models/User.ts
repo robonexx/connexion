@@ -1,6 +1,6 @@
 import { Document, Schema, model, MongooseError, Model} from 'mongoose';
 import mongoose from "mongoose";
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 interface IUser extends Document {
   username: string;
@@ -8,7 +8,7 @@ interface IUser extends Document {
   password: string;
   image?: string;
     role: 'admin' | 'teacher' | 'student';
-    desc?: string;
+    desc: string;
   fullname?: string;
   createdAt: Date;
   updatedAt: Date;
@@ -17,15 +17,11 @@ interface IUser extends Document {
     startYear: number;
   }[]; 
   startYear?: number;
-  /* subjects?: Schema.Types.ObjectId[]; */
+  subjects?: Schema.Types.ObjectId[];
   isUserInYear2(): boolean;
 }
 
-interface Methods {
-  comparePassword(password: string): Promise<boolean>;
-}
-
-const UserSchema = new Schema<IUser, {}, Methods>(
+const UserSchema = new Schema<IUser>(
   {
     fullname: {
       type: String,
@@ -36,7 +32,7 @@ const UserSchema = new Schema<IUser, {}, Methods>(
       required: true,
       unique: true,
         trim: true,
-        min: 4,
+        min: 3,
       max: 20,
     },
     email: {
@@ -47,6 +43,7 @@ const UserSchema = new Schema<IUser, {}, Methods>(
     password: {
       type: String,
       required: true,
+      select: false,
     },
     image: {
       type: String,
@@ -55,7 +52,6 @@ const UserSchema = new Schema<IUser, {}, Methods>(
     },
     role: {
       type: String,
-      enum: ['admin', 'teacher', 'student'],
       default: 'student',
     },
     desc: {
@@ -66,11 +62,11 @@ const UserSchema = new Schema<IUser, {}, Methods>(
       {
         classId: {
           type: String,
-          required: false,
+          required: true,
         },
         startYear: {
           type: Number,
-          required: false,
+          required: true,
         },
       },
     ],
@@ -78,12 +74,12 @@ const UserSchema = new Schema<IUser, {}, Methods>(
       type: Number,
       required: false,
     },
-    /* subjects: [
+    subjects: [
       {
         type: Schema.Types.ObjectId,
         ref: 'Subject',
       },
-    ], */
+    ],
   },
   { timestamps: true }
 );
@@ -93,24 +89,13 @@ UserSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next();
 
   try {
-      const salt = await bcrypt.genSalt(10);
-      this.password = await bcrypt.hash(this.password, salt);
+      this.password = await bcrypt.hash(this.password, 10);
       next();
   } catch (error) {
       if (error instanceof MongooseError) next(error);
       else throw error;
   }
 })
-
-// compare passwords
-UserSchema.methods.comparePassword = async function (password) {
-  try {
-    return await bcrypt.compare(password, this.password);
-  } catch (error) {
-    throw error;
-  }
- 
-}
 
 // Define the method on the schema's methods property
 UserSchema.methods.isUserInYear2 = function () {
@@ -123,8 +108,14 @@ UserSchema.methods.isUserInYear2 = function () {
   return currentYear - startYear === (isInYear2 ? 1 : 0);
 };
 
-const UserModel = mongoose.models.User || model<IUser>('User', UserSchema);
+const User = mongoose.models.User || model<IUser>('User', UserSchema);
 
-export default UserModel as Model<IUser, {}, Methods>;
+export default User;
 export type { IUser };
+  
+  
+
+
+
+
 
