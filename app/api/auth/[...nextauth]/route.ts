@@ -4,6 +4,7 @@ import { compare } from "bcryptjs";
 
 import { connectToDB } from "@/lib/db";
 import User from "@/lib/models/User";
+import { signIn } from "next-auth/react";
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -22,16 +23,16 @@ export const authOptions: AuthOptions = {
 
         const user = await User.findOne({ username: credentials.username });
 
-        if (!user) {
-          throw new Error("User not found");
+        if (!user || !user?.password) {
+          throw new Error("Invalid email or password");
         }
 
         const isMatch = await compare(credentials.password, user.password);
 
         if (!isMatch) {
           throw new Error("Invalid password");
-        } 
-console.log('user logged in password is match')
+        }
+
         return user
       },
     }),

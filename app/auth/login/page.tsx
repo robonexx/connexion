@@ -1,9 +1,8 @@
 'use client';
 import { ChangeEventHandler, FormEventHandler, useState } from 'react';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { Input } from '@/components/input-field/InputField';
 import { useRouter } from 'next/navigation';
-import ErrorMessage from '@/components/error-msg/ErrorMessage';
 
 interface LoginFormProps {
   onSubmit: (username: string, password: string) => void;
@@ -33,7 +32,7 @@ const LoginPage: React.FC<LoginFormProps> = ({ onSubmit }) => {
     setLoading(true);
     try {
       if (!user.username || !user.password) {
-        setError('Please fill all the fields');
+        setError('please fill all the fields');
         return;
       }
 
@@ -45,21 +44,17 @@ const LoginPage: React.FC<LoginFormProps> = ({ onSubmit }) => {
         redirect: false,
       });
 
-      if (res?.ok) {
-        console.log('Authentication successful');
-        setError('');
-        router.push('/dashboard');
-      } else {
-        console.log('Authentication error:', res?.error);
-        setError('Invalid username or password');
-        setUser({
-          username: '',
-          password: '',
-        });
+      if (res?.error) {
+        console.log('Authentication error:', res.error);
+        setError(res.error);
+        router.replace('/profile');
       }
+      console.log('submitted form');
+      setError('');
+      router.push('/dashboard');
     } catch (error) {
-      console.error('Error during authentication:', error);
-      setError('An error occurred during authentication');
+      console.log(error);
+      setError('');
     } finally {
       setLoading(false);
 
@@ -102,7 +97,6 @@ const LoginPage: React.FC<LoginFormProps> = ({ onSubmit }) => {
             handleChange={handleInputChange}
           />
         </div>
-        {error ? <ErrorMessage message={error} /> : <div></div>}
         <button
           type='submit'
           className='bg-transparent border-[1px] text-white p-2 rounded-md hover:bg-slate-700 transition-all ease-in-out duration-300'

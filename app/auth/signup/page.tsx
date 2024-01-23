@@ -75,7 +75,7 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
         method: 'POST',
         body: JSON.stringify(userDataWithoutConfirmPassword),
       });
-
+      
       const parsedResponse = await res.json();
       console.log('API response:', parsedResponse);
       setIsInProgress(false);

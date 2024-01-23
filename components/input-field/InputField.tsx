@@ -5,8 +5,8 @@ type InputFieldType = {
   id: string;
   labelValue: string;
   name: string;
-  type: string;
-  required?: boolean;
+    type: string;
+    required?: boolean;
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -15,20 +15,20 @@ export const Input = ({
   id,
   labelValue,
   name,
-  type,
+    type,
   required,
   handleChange,
 }: InputFieldType) => {
   return (
     <div className='mb-4'>
-          <label htmlFor={htmlFor} className="block text-sm font-medium text-white">{name}</label>
+          <label htmlFor={htmlFor} className="block text-sm font-medium text-white">{labelValue}</label>
       <input
         className="mt-1 p-2 w-full border rounded-md bg-transparent placeholder:text-xs"
         type={type}
         id={id}
-        name={name}
+              name={name}
+              required={required}
         onChange={handleChange}
-        required={required}
         placeholder={labelValue}
       />
     </div>

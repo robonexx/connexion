@@ -11,10 +11,6 @@ export async function POST(request: NextRequest) {
   try {
     const { fullname, username, email, password, startYear, role } = body
 
-    if (!username || !email || !password) {
-      return new NextResponse("missing name, email, password", {status: 400})
-    }
-
     const userEmail = await User.findOne({ email });
     const userUsername = await User.findOne({ username });
 
