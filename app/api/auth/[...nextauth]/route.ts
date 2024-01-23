@@ -31,7 +31,7 @@ export const authOptions: AuthOptions = {
 
         if (!isMatch) {
           throw new Error("Invalid password");
-        }
+        } 
 
         return user
       },
