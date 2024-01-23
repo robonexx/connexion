@@ -75,7 +75,7 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
         method: 'POST',
         body: JSON.stringify(userDataWithoutConfirmPassword),
       });
-      
+
       const parsedResponse = await res.json();
       console.log('API response:', parsedResponse);
       setIsInProgress(false);
@@ -125,6 +125,7 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
             name='fullname'
             labelValue='fullname'
             handleChange={handleInputChange}
+            value={user.fullname}
           />
         </div>
         <div className='mb-4'>
@@ -136,6 +137,7 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
             labelValue='username'
             required={true}
             handleChange={handleInputChange}
+            value={user.username}
           />
         </div>
         <div className='mb-4'>
@@ -147,6 +149,7 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
             labelValue='Email'
             required={true}
             handleChange={handleInputChange}
+            value={user.email}
           />
         </div>
         <div className='mb-4'>
@@ -158,6 +161,7 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
             type='password'
             required={true}
             handleChange={handleInputChange}
+            value={user.password}
           />
         </div>
         <div className='mb-4'>
@@ -169,6 +173,7 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
             type='password'
             required={true}
             handleChange={handleInputChange}
+            value={user.confirmPassword}
           />
           {passwordMatchError && (
             <p className='text-red-500 text-sm mt-1'>{passwordMatchError}</p>
@@ -212,6 +217,7 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
             labelValue='Start Year'
             required={false}
             handleChange={handleInputChange}
+            value={user.startYear}
           />
         </div>
         {error ? <ErrorMessage message={error} /> : <div></div>}
