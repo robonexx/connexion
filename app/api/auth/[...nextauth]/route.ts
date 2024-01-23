@@ -52,6 +52,8 @@ export const authOptions: AuthOptions = {
 
       session.user = { ...session.user, ...mongodbUser._doc }
 
+      console.log('session data: ',session)
+
       return session
     }
   }
