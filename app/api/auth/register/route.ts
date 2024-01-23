@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json()
   try {
-    const { fullname, username, email, password, startYear } = body
+    const { fullname, username, email, password, startYear, role } = body
 
     if (!username || !email || !password) {
       return new NextResponse("missing name, email, password", {status: 400})
@@ -40,6 +40,7 @@ export async function POST(request: NextRequest) {
         startYear,
       email,
       password: hashedPassword,
+      role,
     });
 
     const savedUser = await newUser.save();
