@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json()
   try {
-    const { fullname, username, email, password, startYear } = body
+    const { fullname, username, email, password, startYear, role } = body
 
     const userEmail = await User.findOne({ email });
     const userUsername = await User.findOne({ username });
@@ -36,6 +36,7 @@ export async function POST(request: NextRequest) {
         startYear,
       email,
       password: hashedPassword,
+      role,
     });
 
     const savedUser = await newUser.save();
