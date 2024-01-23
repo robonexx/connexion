@@ -89,7 +89,6 @@ const LoginPage: React.FC<LoginFormProps> = ({ onSubmit }) => {
             type='text'
             required={true}
             handleChange={handleInputChange}
-            value={user.username}
           />
         </div>
         <div className='mb-4'>
@@ -101,7 +100,6 @@ const LoginPage: React.FC<LoginFormProps> = ({ onSubmit }) => {
             type='password'
             required={true}
             handleChange={handleInputChange}
-            value={user.password}
           />
         </div>
         {error ? <ErrorMessage message={error} /> : <div></div>}
