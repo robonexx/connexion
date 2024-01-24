@@ -1,18 +1,14 @@
 import Image from 'next/image'
-import { StaticImageData } from 'next/image'
 
-type LogoProps    = {
-    image: string | StaticImageData
-  }
-const Logo: React.FC<LogoProps> = () => {
+const Logo: React.FC = () => {
 
   return (
     <Image
-    className='h-48 w-48'
+    className='h-56 w-56 object-contain'
     src='/dclogo-vit.png'
     alt='danscenter logo'
-    width={256}
-    height={256}
+    width={224}
+    height={224}
   />
   );
 };
