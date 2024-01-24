@@ -3,14 +3,16 @@ import Image, { StaticImageData } from 'next/image';
 
 type ImageProps = {
   image: string | StaticImageData;
+  width: number;
+  height: number;
 };
 
-const Avatar = ({image}: ImageProps) => {
+const Avatar = ({image, width, height }: ImageProps) => {
   return (
     <Image
             className="rounded-full"
-            width={36}
-            height={36}
+            width={width}
+            height={height}
             src={image}
             alt="User"
           />
