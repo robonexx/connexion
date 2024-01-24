@@ -34,16 +34,16 @@ const Nav = () => {
       </button>
       {session && (
         <span className='text-xs font-normal md:text-base lg:text-2xl tracking-normal py-10 md:font-semibold text-[#ff4040]'>
-         <span className='text-[#888]'>Välkommen! </span> {session.user?.name}
+          <span className='text-[#888]'>Välkommen! </span> {session.user?.name}
         </span>
       )}
 
       {/* Navigation Links will make dynamic depending on logged in user */}
       <div className='hidden md:block'>
-        <a href='#' className='text-white mx-4'>
+        <a href='/dashboard' className='text-white mx-4'>
           Dashboard
         </a>
-        <a href='#' className='text-white mx-4'>
+        <a href='/dashboard/posts/add' className='text-white mx-4'>
           Nytt inlägg
         </a>
         <a href='#' className='text-white mx-4'>
@@ -128,7 +128,7 @@ const Nav = () => {
         {image ? (
           <Avatar image={image} width={32} height={32} />
         ) : (
-          <CgProfile />
+          <CgProfile className='w-8 h-8' />
         )}
       </div>
     </nav>

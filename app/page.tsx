@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Logo from "./_components/Logo";
 
+
+
 const Home = async () => {
 
   return (
