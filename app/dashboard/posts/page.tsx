@@ -14,11 +14,6 @@ export type PostTypes = {
   title: string;
   tags?: string[];
   body: string;
-  author: {
-    _id: string;
-    username: string
-}
-
   searchParams: {
     q?: string;
     page?: string;
@@ -39,7 +34,7 @@ const Posts = async ({ searchParams }: PostTypes) => {
         <CustomLink href='/dashboard/posts/add' />
       </nav>
       <PostsList>
-        {posts.map(({ _id, createdAt, title, tags, body, author }) => (
+        {posts.map(({ _id, createdAt, title, tags, body }) => (
           <PostItem
             key={_id}
             title={title}
@@ -47,7 +42,7 @@ const Posts = async ({ searchParams }: PostTypes) => {
             body={body}
             tags={tags}
             id={_id.toString()}
-            author={author}
+          
           />
         ))}
       </PostsList>
