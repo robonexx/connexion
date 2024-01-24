@@ -49,7 +49,7 @@ const LoginPage: React.FC<LoginProps> = () => {
       if (res?.error) {
         console.log('Authentication error:', res.error);
         setError(res.error);
-        router.replace('/profile');
+        router.replace('/');
       }
       console.log('submitted form');
       setError('');

@@ -1,6 +1,6 @@
 import { connectToDB } from "@/lib/db";
 import User from "@/lib/models/User";
-import bcrypt from "bcrypt";
+/* import bcrypt from "bcrypt"; */
 import { NextResponse, NextRequest } from "next/server";
 
 connectToDB();
@@ -9,10 +9,10 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json()
   try {
-    const { fullname, username, email, password, startYear, role } = body
+    const { fullname, name, email, password, startYear, role } = body
 
     const userEmail = await User.findOne({ email });
-    const userUsername = await User.findOne({ username });
+    const userName = await User.findOne({ name });
 
     if (userEmail) {
       return NextResponse.json(
@@ -20,22 +20,19 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-    if (userUsername) {
+    if (userName) {
       return NextResponse.json(
         { error: "A user with this username already exists, please try with an other" },
         { status: 400 }
       );
     }
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
     const newUser = new User({
-        username,
+        name,
         fullname,
         startYear,
       email,
-      password: hashedPassword,
+      password,
       role,
     });
 

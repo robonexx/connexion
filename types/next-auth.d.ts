@@ -15,6 +15,7 @@ declare module 'next-auth' {
     _id?: string
     role?: string
     name: string
+    startYear: string;
       password: string
   }
 }
