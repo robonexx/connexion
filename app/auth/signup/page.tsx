@@ -4,20 +4,7 @@ import { useRouter } from 'next/navigation';
 import { Input } from '@/components/input-field/InputField';
 import ErrorMessage from '@/components/error-msg/ErrorMessage';
 
-interface SignupProps {
-  onSubmit: (data: FormData) => void;
-}
-
-interface FormData {
-  fullname: string;
-  name: string;
-  password: string;
-  confirmPassword: string;
-  role: string;
-  startYear?: number;
-}
-
-const SignupPage: React.FC<SignupProps> = () => {
+const SignupPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [error, setError] = useState('');
