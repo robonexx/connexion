@@ -23,7 +23,7 @@ const SidebarMenuItems: SidebarMenuItem[] = [
     icon: <MdDashboard />,
   },
   {
-    href: '/dashboard/classes',
+    href: '/dashboard/admin-classes',
     title: 'Klasser',
     icon: <MdSupervisedUserCircle />,
   },
@@ -33,22 +33,22 @@ const SidebarMenuItems: SidebarMenuItem[] = [
     icon: <MdSupervisedUserCircle />,
   },
   {
-    href: '/dashboard/students',
+    href: '/dashboard/admin-students',
     title: 'Alla Elever',
     icon: <PiStudent />,
   },
   {
-    href: '/dashboard/year1',
+    href: '/dashboard/admin-year1',
     title: 'År1',
     icon: <PiStudent />,
   },
   {
-    href: '/dashboard/year2',
+    href: '/dashboard/admin-year2',
     title: 'År2',
     icon: <PiStudent />,
   },
   {
-    href: '/dashboard/teachers',
+    href: '/dashboard/admin-teachers',
     title: 'Lärare',
     icon: <FaUserTie />,
   },

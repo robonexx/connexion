@@ -69,9 +69,9 @@ const LoginPage: React.FC<LoginProps> = () => {
 
   return (
     <div className='max-w-2xl rounded-md border-gray-500 border-[1px] py-10 px-5 m-auto w-full mt-10'>
-      <h2 className='w-fit'>
+      <h2 className='mt-4 font-semibold text-xl w-fit'>
         Login
-        <span className='block w-full transition-all duration-500 h-0.5 bg-[#ff4040]'></span>
+        <span className='block w-full transition-all duration-500 h-1 bg-[#ff4040]'></span>
       </h2>
       <form
         onSubmit={handleSubmit}
