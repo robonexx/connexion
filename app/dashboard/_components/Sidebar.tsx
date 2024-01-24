@@ -1,9 +1,14 @@
 import React from 'react';
 import CustomLink from '@/components/custom-link/CustomLink';
-import { MdDashboard, MdSupervisedUserCircle, MdPersonAddAlt, MdPostAdd } from 'react-icons/md'
-import { PiStudent } from "react-icons/pi";
-import { FaUserTie } from "react-icons/fa6";
-import { TiDocumentText } from "react-icons/ti";
+import {
+  MdDashboard,
+  MdSupervisedUserCircle,
+  MdPersonAddAlt,
+  MdPostAdd,
+} from 'react-icons/md';
+import { PiStudent } from 'react-icons/pi';
+import { FaUserTie } from 'react-icons/fa6';
+import { TiDocumentText } from 'react-icons/ti';
 
 interface SidebarMenuItem {
   href: string;
@@ -13,9 +18,9 @@ interface SidebarMenuItem {
 
 const SidebarMenuItems: SidebarMenuItem[] = [
   {
-  href: '/dashboard',
-  title: 'Dashboard',
-  icon: <MdDashboard />
+    href: '/dashboard',
+    title: 'Dashboard',
+    icon: <MdDashboard />,
   },
   {
     href: '/dashboard/classes',
@@ -30,17 +35,17 @@ const SidebarMenuItems: SidebarMenuItem[] = [
   {
     href: '/dashboard/students',
     title: 'Alla Elever',
-    icon: <PiStudent  />,
+    icon: <PiStudent />,
   },
   {
     href: '/dashboard/year1',
     title: 'År1',
-    icon: <PiStudent  />,
+    icon: <PiStudent />,
   },
   {
     href: '/dashboard/year2',
     title: 'År2',
-    icon: <PiStudent  />,
+    icon: <PiStudent />,
   },
   {
     href: '/dashboard/teachers',
@@ -62,14 +67,21 @@ const SidebarMenuItems: SidebarMenuItem[] = [
     title: 'Nytt inlägg',
     icon: <MdPostAdd />,
   },
-]
+];
 
 const Sidebar = () => {
   return (
     <div className='relative w-full h-full bg-black shadow flex-col items-center justify-center pt-[20vh] px-2 border-r-4 border-[red]'>
       {SidebarMenuItems.map(({ href, title, icon }) => (
-        <CustomLink key={title} href={href} title={title} className='text-sm font-thin'>{icon}</CustomLink>
-      ) )}
+        <CustomLink
+          key={title}
+          href={href}
+          title={title}
+          className='text-sm font-thin'
+        >
+          {icon}
+        </CustomLink>
+      ))}
     </div>
   );
 };

@@ -11,7 +11,7 @@ const Dashboard = () => {
     <div className='relative flex min-h-screen h-full w-full flex-col items-center red-gradient py-20 px-20'>
       <h1 className='my-8 font-md font-semibold'>Admin dashboard!</h1>
       <div className='min-h-screen py-20'>
-        <div className='w-full max-w-2xl grid place-items-center mx-auto py-40 gap-6 bg-slate-50'>
+        <div className='w-fit max-w-xl grid place-items-center mx-auto py-40 gap-6 bg-transparent'>
           <span className='text-4xl tracking-wide font-semibold capitalize text-[#5D7DF3]'>
             welcome to the Dashboard
           </span>
