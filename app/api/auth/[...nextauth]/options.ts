@@ -46,7 +46,7 @@ export const authOptions: AuthOptions = {
       strategy: "jwt"
     },
   
-    debug: process.env.NODE_ENV === 'development',
+    /* debug: process.env.NODE_ENV === 'development', */
   
       callbacks: {
           jwt: async ({ token, user }) => {
