@@ -49,10 +49,14 @@ export const authOptions: AuthOptions = {
 
     callbacks: {
         jwt: async ({ token, user }) => {
-            if (user) token.role = user.role
-            console.log('token from jwt', token)
-            return token
-            
+            if (user) {
+                // Add user-specific claims to the token
+                token.role = user.role;
+                token.startYear = user.startYear;
+            }
+    
+            console.log('token from jwt', token);
+            return token;
         },
     async session({ session }) {
       const mongodbUser = await User.findOne({ name: session.user.name }).select("-password")
