@@ -62,7 +62,7 @@ const Dashboard = () => {
       <h1 className='text-4xl tracking-wide font-semibold capitalize text-[#ff4040]'>Senaste inlägg!</h1>
       <div className='min-h-screen pt-8 pb-8'>
         <div className='w-fit max-w-4xl grid place-items-center mx-auto bg-transparent'>
-          <section className='w-full h-full flex flex-col md:flex-wrap gap-5 mx-auto'>
+          <section className='w-full h-full flex flex-col md:flex-row md:flex-wrap gap-5'>
             {mockData.map((postData: PostProps) => (
               <Post key={postData.id} {...postData} />
             ))}

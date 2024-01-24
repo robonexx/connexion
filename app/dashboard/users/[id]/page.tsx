@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+/* import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 
@@ -12,13 +12,13 @@ interface User {
     role: string;
   isActive: boolean;
   img?: string;
-}
+} */
 
 const SingleUserPage = () => {
-  const router = useRouter();
+ /*  const router = useRouter();
   const { id } = router.query;
 
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(null); */
 
   /* useEffect(() => {
    
@@ -36,19 +36,19 @@ const SingleUserPage = () => {
     }
   }, [id]); */
 
-  const updateUser = async (event: React.FormEvent) => {
+ /*  const updateUser = async (event: React.FormEvent) => {
     event.preventDefault();
     // Implement your update logic using the user data
-  };
+  }; */
 
-  if (!user) {
+  /* if (!user) {
     return <div>Loading...</div>;
-  }
+  } */
 
   return (
     <div className='flex gap-12 mt-5'>
       <div className='flex-1 p-5 rounded-sm font-semibold h-max-fit'>
-        <div className='relative w-full h-64 rounded-sm overflow-hidden mb-5'>
+        {/* <div className='relative w-full h-64 rounded-sm overflow-hidden mb-5'>
           <Image src={user.img || '/images/rob12.png'} alt="" fill />
         </div>
         {user.username}
@@ -77,7 +77,7 @@ const SingleUserPage = () => {
             <option value="false">No</option>
           </select>
           <button type="submit">Update</button>
-        </form>
+        </form> */}
       </div>
     </div>
   );
