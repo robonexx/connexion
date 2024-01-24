@@ -8,25 +8,20 @@ import { convertDate } from '@/utils/convertDate';
 
 // mockData will be updated to data from db
 
-type PostTypes = {
-  id: string;
-  createdAt: Date;
-  title: string;
-  tags?: string[];
-  body: string;
+type SearchTypes = {
   searchParams: {
     q?: string;
     page?: string;
   };
 };
 
-const Posts = async ({ searchParams }: PostTypes) => {
+const Posts = async ({ searchParams }: SearchTypes) => {
   const q = searchParams?.q || '';
   const page = searchParams?.page || '1';
 
   const { count, posts } = await fetchPosts(q, page);
 
-  console.log('loggin all posts:', posts)
+  console.log('loggin all posts:', posts);
   return (
     <div className='relative flex min-h-screen h-full w-full flex-col items-center mt-20 red-gradient'>
       <h1>Post Page!</h1>
@@ -42,7 +37,6 @@ const Posts = async ({ searchParams }: PostTypes) => {
             body={body}
             tags={tags}
             id={_id.toString()}
-          
           />
         ))}
       </PostsList>
