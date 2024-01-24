@@ -1,20 +1,19 @@
-import React from 'react';
-import ImageComponent from '@/components/image-component/ImageComponent';
+import Image from 'next/image'
+import { StaticImageData } from 'next/image'
 
-interface LogoProps {
-  alt: string;
-  className?: string;
-}
-
-const Logo: React.FC<LogoProps> = ({ alt, className }) => {
-  // Assuming your logo.png is in the public directory
-  const src = '/logo.png';
+type LogoProps    = {
+    image: string | StaticImageData
+  }
+const Logo: React.FC<LogoProps> = () => {
 
   return (
-      <ImageComponent
-          src='/dclogo-vit.png'
-          alt='danscenter logo'
-      />
+    <Image
+    className='h-48 w-48'
+    src='/dclogo-vit.png'
+    alt='danscenter logo'
+    width={256}
+    height={256}
+  />
   );
 };
 
