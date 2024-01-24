@@ -35,10 +35,10 @@ const Students = async ({ searchParams }: StudentProps) => {
       <UsersList>
         {students ? (
           students.map(
-            ({ username, email, createdAt, role, image, _id }, index) => (
+            ({ name, email, createdAt, role, image, _id }, index) => (
               <UserItem
                 key={index}
-                username={username}
+                name={name}
                 email={email}
                 createdAt={createdAt}
                 role={role}
