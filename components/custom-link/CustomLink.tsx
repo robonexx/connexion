@@ -16,7 +16,7 @@ const CustomLink = (props: ComponentProps<typeof Link>) => {
     >
       <span className='flex items-center min-w-full'>
         {props.children}
-        <span className='mx-2 text-xs font-thin'>{props.title}</span>
+        <span className='mx-2 text-base font-normal'>{props.title}</span>
       </span>
 
       <span className='block max-w-0 group-hover:max-w-full transition-all duration-500 h-[1px] my-1 bg-[#ececec]'></span>
