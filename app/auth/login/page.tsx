@@ -4,13 +4,7 @@ import { signIn, useSession } from 'next-auth/react';
 import { Input } from '@/components/input-field/InputField';
 import { useRouter } from 'next/navigation';
 
-interface LoginProps {
-  name: string;
-  password: string;
-  onSubmit: (name: string, password: string) => void;
-}
-
-const LoginPage: React.FC<LoginProps> = () => {
+const LoginPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [error, setError] = useState('');
