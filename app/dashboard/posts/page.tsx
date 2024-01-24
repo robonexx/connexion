@@ -8,7 +8,7 @@ import { convertDate } from '@/utils/convertDate';
 
 // mockData will be updated to data from db
 
-export type PostTypes = {
+type PostTypes = {
   id: string;
   createdAt: Date;
   title: string;
