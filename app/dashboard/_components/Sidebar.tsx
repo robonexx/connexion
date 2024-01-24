@@ -71,7 +71,7 @@ const SidebarMenuItems: SidebarMenuItem[] = [
 
 const Sidebar = () => {
   return (
-    <div className='relative w-full h-full bg-black shadow flex-col items-center justify-center pt-[20vh] px-2 border-r-4 border-[red]'>
+    <div className='relative w-full h-full bg-black shadow flex-col items-start justify-center px-4 hidden md:flex'>
       {SidebarMenuItems.map(({ href, title, icon }) => (
         <CustomLink
           key={title}

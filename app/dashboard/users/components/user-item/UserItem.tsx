@@ -37,7 +37,7 @@ const UserItem = ({
         className='flex items-center gap-4 px-6 py-4 font-medium text-gray-white whitespace-nowrap dark:text-white hover:bg-gray-400 cursor-pointer'
       >
         <div>
-          {image ? <Avatar image={image} /> : <CgProfile />}
+          {image ? <Avatar image={image} width={32} height={32} /> : <CgProfile />}
         </div>
         <span className='text-white'> {name}</span>
       </td>

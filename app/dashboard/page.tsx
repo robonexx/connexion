@@ -2,6 +2,7 @@
 
 import { signOut, useSession } from 'next-auth/react';
 import React from 'react';
+import Sidebar from './_components/Sidebar';
 
 const Dashboard = () => {
   // fetch the data
