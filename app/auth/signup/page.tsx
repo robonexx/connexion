@@ -4,27 +4,27 @@ import { useRouter } from 'next/navigation';
 import { Input } from '@/components/input-field/InputField';
 import ErrorMessage from '@/components/error-msg/ErrorMessage';
 
-interface SignupFormProps {
+interface SignupProps {
   onSubmit: (data: FormData) => void;
 }
 
 interface FormData {
   fullname: string;
-  username: string;
+  name: string;
   password: string;
   confirmPassword: string;
   role: string;
   startYear?: number;
 }
 
-const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
+const SignupPage: React.FC<SignupProps> = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [error, setError] = useState('');
   const [isInProgress, setIsInProgress] = useState(false);
   const [user, setUser] = useState({
     fullname: '',
-    username: '',
+    name: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -57,7 +57,7 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
 
     try {
       if (
-        !userDataWithoutConfirmPassword.username ||
+        !userDataWithoutConfirmPassword.name ||
         !userDataWithoutConfirmPassword.email ||
         !userDataWithoutConfirmPassword.password
       ) {
@@ -97,7 +97,7 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
 
       setUser({
         fullname: '',
-        username: '',
+        name: '',
         email: '',
         password: '',
         confirmPassword: '',
@@ -129,11 +129,11 @@ const SignupPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
         </div>
         <div className='mb-4'>
           <Input
-            htmlFor='username'
+            htmlFor='name'
             type='text'
-            id='username'
-            name='username'
-            labelValue='username'
+            id='name'
+            name='name'
+            labelValue='name'
             required={true}
             handleChange={handleInputChange}
           />

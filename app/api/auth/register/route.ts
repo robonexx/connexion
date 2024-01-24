@@ -1,6 +1,6 @@
 import { connectToDB } from "@/lib/db";
 import User from "@/lib/models/User";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 import { NextResponse, NextRequest } from "next/server";
 
 connectToDB();

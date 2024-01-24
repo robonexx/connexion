@@ -6,7 +6,7 @@ declare module 'next-auth' {
       _id: string
       id: string
       role: 'admin' | 'student' | 'teacher'
-      username: string
+      name: string
       password: string
     } & DefaultSession['user']
   }
@@ -14,7 +14,7 @@ declare module 'next-auth' {
   export interface User extends DefaultUser {
     _id?: string
     role?: string
-    username: string
+    name: string
       password: string
   }
 }

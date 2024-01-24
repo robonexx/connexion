@@ -1,9 +1,9 @@
 import { Document, Schema, model, MongooseError, Model} from 'mongoose';
 import mongoose from "mongoose";
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 
 interface IUser extends Document {
-  username: string;
+  name: string;
   email: string;
   password: string;
   image?: string;
@@ -27,7 +27,7 @@ const UserSchema = new Schema<IUser>(
       type: String,
       required: true,
     },
-    username: {
+    name: {
       type: String,
       required: true,
       unique: true,
@@ -43,7 +43,6 @@ const UserSchema = new Schema<IUser>(
     password: {
       type: String,
       required: true,
-      select: false,
     },
     image: {
       type: String,
@@ -85,17 +84,27 @@ const UserSchema = new Schema<IUser>(
 );
 
 // adding the hassed password transformation here is more secure in production
-UserSchema.pre('save', async function(next) {
+/* UserSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next();
 
   try {
-      this.password = await bcrypt.hash(this.password, 10);
+    const salt = await bcrypt.genSalt(10);
+      this.password = await bcrypt.hash(this.password, salt);
       next();
   } catch (error) {
       if (error instanceof MongooseError) next(error);
       else throw error;
   }
-})
+}) */
+
+/* UserSchema.methods.matchPassword = async function (password: string): Promise<boolean> {
+  try {
+    return await bcrypt.compare(password, this.password);
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}; */
 
 // Define the method on the schema's methods property
 UserSchema.methods.isUserInYear2 = function () {
@@ -112,10 +121,3 @@ const User = mongoose.models.User || model<IUser>('User', UserSchema);
 
 export default User;
 export type { IUser };
-  
-  
-
-
-
-
-

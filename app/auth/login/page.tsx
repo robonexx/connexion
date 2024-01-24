@@ -4,16 +4,18 @@ import { signIn, useSession } from 'next-auth/react';
 import { Input } from '@/components/input-field/InputField';
 import { useRouter } from 'next/navigation';
 
-interface LoginFormProps {
-  onSubmit: (username: string, password: string) => void;
+interface LoginProps {
+  name: string;
+  password: string;
+  onSubmit: (name: string, password: string) => void;
 }
 
-const LoginPage: React.FC<LoginFormProps> = ({ onSubmit }) => {
+const LoginPage: React.FC<LoginProps> = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [error, setError] = useState('');
   const [user, setUser] = useState({
-    username: '',
+    name: '',
     password: '',
   });
 
@@ -31,15 +33,15 @@ const LoginPage: React.FC<LoginFormProps> = ({ onSubmit }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      if (!user.username || !user.password) {
+      if (!user.name || !user.password) {
         setError('please fill all the fields');
         return;
       }
 
-      console.log(user.username, user.password + ' from submit');
+      console.log(user.name, user.password + ' from submit');
 
       const res = await signIn('credentials', {
-        username: user.username,
+        name: user.name,
         password: user.password,
         redirect: false,
       });
@@ -59,7 +61,7 @@ const LoginPage: React.FC<LoginFormProps> = ({ onSubmit }) => {
       setLoading(false);
 
       setUser({
-        username: '',
+        name: '',
         password: '',
       });
     }
@@ -77,9 +79,9 @@ const LoginPage: React.FC<LoginFormProps> = ({ onSubmit }) => {
       >
         <div className='mb-4'>
           <Input
-            htmlFor='username'
-            name='username'
-            id='username'
+            htmlFor='name'
+            name='name'
+            id='name'
             labelValue='Your username'
             type='text'
             required={true}
