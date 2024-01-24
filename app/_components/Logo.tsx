@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from 'next/image';
+import ImageComponent from '@/components/image-component/ImageComponent';
 
 interface LogoProps {
   alt: string;
@@ -11,11 +11,10 @@ const Logo: React.FC<LogoProps> = ({ alt, className }) => {
   const src = '/logo.png';
 
   return (
-    <img
-      src={src}
-      alt={alt}
-      className={`w-16 h-16 object-contain ${className}`}
-    />
+      <ImageComponent
+          src='/dclogo-vit.png'
+          alt='danscenter logo'
+      />
   );
 };
 

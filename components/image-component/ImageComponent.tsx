@@ -4,7 +4,7 @@ import Image from 'next/image';
 import cn from 'clsx';
 import { ComponentProps, useState } from 'react';
 
-const NextImage = (props: ComponentProps<typeof Image>) => {
+const ImageComponent = (props: ComponentProps<typeof Image>) => {
   const [isLoading, setLoading] = useState(true);
 
   return (
@@ -23,4 +23,4 @@ const NextImage = (props: ComponentProps<typeof Image>) => {
   );
 };
 
-export default NextImage;
+export default ImageComponent;
