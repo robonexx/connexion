@@ -2,7 +2,7 @@
 import React from 'react';
 import { IoMdLogIn, IoMdLogOut } from 'react-icons/io';
 import { signOut, useSession } from 'next-auth/react';
-
+import Link from 'next/link';
 import CustomLink from '../custom-link/CustomLink';
 import Image from 'next/image';
 
@@ -15,18 +15,20 @@ const Header = () => {
   );
   return (
     <header className='relative z-10 max-w-full shadow-md pl-0 pr-4 sm:pr-10 bg-black font-[sans-serif] h-[60px] flex justify-between'>
-      <CustomLink
+      <Link
         href='/'
-        className='font-bold bg-[red] h-full w-[230px] border-[1px] border-[#ff4040] grid place-content-center text-white py-4'
+        /* className='font-bold bg-[red] h-full w-[230px] border-[1px] border-[#ff4040] grid place-content-center text-white py-4' */
+        className='font-bold h-full w-[230px]  grid place-content-center text-white py-4'
+        
       >
         <Image
-          className='h-16 w-16 object-contain relative'
+          className='h-16 w-16 object-contain relative drop-shadow-[1px_2px_5px_#ff404080]'
           src='/dclogo-vit.png'
           alt='danscenter logo'
           width={64}
           height={64}
         />
-      </CustomLink>
+      </Link>
       <div className='flex items-center justify-between gap-5 relative w-full'>
         <div className='flex lg:order-1 max-sm:ml-auto'>
           {/* Hamburger menu -  */}
