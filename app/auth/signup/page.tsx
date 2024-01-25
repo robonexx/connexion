@@ -95,14 +95,14 @@ const SignupPage: React.FC = () => {
   };
 
   return (
-    <div className='max-w-xl rounded-md border-gray-500 border-[1px] py-10 px-5 m-auto w-full mt-10'>
+    <div className='max-w-xl rounded-md border-gray-500 md:border-[1px] py-10 px-2 md:px-5 m-auto w-full mt-10'>
       <h2 className='mt-4 font-semibold text-xl w-fit'>
         Sign up
         <span className='block w-full transition-all duration-500 h-1 bg-[#ff4040]'></span>
       </h2>
       <form
         onSubmit={handleSubmit}
-        className='bg-transparent p-6 rounded-md md:max-w-2/5 md:mx-auto'
+        className='bg-transparent p-6 rounded-md w-full md:max-w-2/5 md:mx-auto'
       >
         <div className='mb-4'>
           <Input

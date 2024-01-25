@@ -27,9 +27,9 @@ const Nav = () => {
     <nav className='bg-black p-4 md:ml-[200px] flex items-center justify-between h-[60px] max-w-full'>
       <button className='md:hidden text-white' onClick={toggleMenu}>
         {isMenuOpen ? (
-          <RiCloseLine className='text-xs font-thin' />
+          <RiCloseLine className='text-xl' />
         ) : (
-          <RiMenu5Fill className='text-xs font-thin' />
+          <RiMenu5Fill className='text-xl' />
         )}
       </button>
       {session && (
@@ -90,9 +90,9 @@ const Nav = () => {
           onClick={toggleDropdown}
         >
           {isDropdownOpen ? (
-            <HiOutlineChevronUp className='text-xs font-thin' />
+            <HiOutlineChevronUp className='text-xl font-thin' />
           ) : (
-            <HiOutlineChevronDown className='text-xs font-thin' />
+            <HiOutlineChevronDown className='text-xl font-thin' />
           )}
         </button>
 

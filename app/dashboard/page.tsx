@@ -57,6 +57,10 @@ const Dashboard = () => {
   // fetch the data
   const { data: session } = useSession();
 
+  if (session?.user.role !== "admin") {
+      return <h1 className="text-5xl">Access Denied</h1>
+ }
+
   return (
     <div className='relative flex min-h-screen h-full w-full flex-col items-center red-gradient py-20 px-20'>
       <h1 className='text-4xl tracking-wide font-semibold capitalize text-[#ff4040]'>Senaste inlägg!</h1>

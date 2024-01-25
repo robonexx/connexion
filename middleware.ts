@@ -8,7 +8,7 @@ export default withAuth(
       // console.log(request.nextUrl.pathname)
       // console.log(request.nextauth.token)
 
-      if (request.nextUrl.pathname.startsWith("/dashboard")
+      if (request.nextUrl.pathname.startsWith("/dashboard/")
           && request.nextauth.token?.role !== "admin") {
           return NextResponse.rewrite(
               new URL("/denied", request.url)
@@ -43,4 +43,4 @@ export default withAuth(
 
 // Applies next-auth only to matching routes - can be regex
 // Ref: https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
-export const config = { matcher: ["/dashboard", "/teachers", "/students"] }
+export const config = { matcher: ["/dashboard/:path*", "/teachers", "/students"] }
