@@ -3,6 +3,7 @@ import { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import { signIn, useSession } from 'next-auth/react';
 import { Input } from '@/components/input-field/InputField';
 import { useRouter } from 'next/navigation';
+import ErrorMessage from '@/components/error-msg/ErrorMessage';
 
 const LoginPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -42,15 +43,23 @@ const LoginPage: React.FC = () => {
 
       if (res?.error) {
         console.log('Authentication error:', res.error);
-        setError(res.error);
-        router.replace('/');
+        setError('Authentication error:');
+        /* router.push('/auth/login'); */
+        setUser({
+          name: '',
+          password: '',
+        });
       }
       console.log('submitted form');
       setError('');
       router.push('/dashboard');
     } catch (error) {
       console.log(error);
-      setError('');
+      setError('Error loggin in check password and name');
+      setUser({
+        name: '',
+        password: '',
+      });
     } finally {
       setLoading(false);
 
@@ -99,6 +108,7 @@ const LoginPage: React.FC = () => {
         >
           Login
         </button>
+        {error ? <ErrorMessage message={error} /> : <div></div>}
       </form>
     </div>
   );

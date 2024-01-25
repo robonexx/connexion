@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { IoMdLogIn, IoMdLogOut } from 'react-icons/io';
-import { signOut, signIn, useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 
 import CustomLink from '../custom-link/CustomLink';
 import Image from 'next/image';
@@ -35,17 +35,17 @@ const Header = () => {
             <CustomLink
               href='/'
               onClick={() => signOut()}
-              className='text-xs font-thin'
+              className='text-xl font-thin'
             >
               Sign out <IoMdLogOut className='mx-1' />
             </CustomLink>
           )}
           {!session && (
-            <CustomLink href='/auth/login' className='text-xs font-thin'>
+            <CustomLink href='/auth/login' className='text-xl font-thin'>
               Login <IoMdLogIn className='mx-1' />
             </CustomLink>
           )}
-          <CustomLink href='/auth/signup' className='text-xs font-thin'>
+          <CustomLink href='/auth/signup' className='text-xl font-thin'>
             Sign-up{' '}
           </CustomLink>
         </div>

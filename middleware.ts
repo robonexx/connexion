@@ -30,6 +30,20 @@ export default withAuth(
               new URL("/denied", request.url)
           )
       }
+      if (request.nextUrl.pathname.startsWith("/year1")
+          && request.nextauth.token?.role !== "admin"
+          && request.nextauth.token?.role !== "student") {
+          return NextResponse.rewrite(
+              new URL("/denied", request.url)
+          )
+      }
+      if (request.nextUrl.pathname.startsWith("/year2")
+          && request.nextauth.token?.role !== "admin"
+          && request.nextauth.token?.role !== "student") {
+          return NextResponse.rewrite(
+              new URL("/denied", request.url)
+          )
+      }
   },
   {
       callbacks: {
