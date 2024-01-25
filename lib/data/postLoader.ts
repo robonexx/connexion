@@ -20,3 +20,15 @@ export const fetchPosts = async (q: string, page:string) => {
         throw new Error('Failed to fetch posts!')
     }
 }
+
+export const fetchSinglePost = async (id: string) => {
+  console.log(id);
+  try {
+    connectToDB();
+    const post = await Post.findById(id);
+    return post;
+  } catch (err) {
+    console.log(err);
+    throw new Error("Failed to fetch user!");
+  }
+};

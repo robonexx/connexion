@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useFormState } from 'react-dom';
 import { addUser } from '@/lib/actions/userActions';
-import toast from 'react-hot-toast'
+/* import toast from 'react-hot-toast' */
 
 
 

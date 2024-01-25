@@ -5,8 +5,8 @@ import Post from '../models/Post';
 import { connectToDB } from '../db';
 
 // ADD USER
-export const addPost = async (formData: FormData) => {
-  const { title, link, body } =
+export const addPost = async (prevState: any, formData: FormData) => {
+  const { title, link, body, id } =
     Object.fromEntries(formData);
   
     let currImage = '';
@@ -18,23 +18,25 @@ export const addPost = async (formData: FormData) => {
     // Convert Uint8Array to base64
     currImage = Buffer.from(buffer).toString('base64');
     
-    console.log('Image in base64:', currImage);
+   /*  console.log('Image in base64:', currImage); */
 
   try {
     connectToDB();
 
     // creating the new user
     const newPost = new Post({
-        title, link, body, author: '65b0b34fc412ae434c5b37c2', image: currImage,
+        title, link, body, author: id, image: currImage,
     });
+
     await newPost.save();
+    revalidatePath('/dashboard/posts');
+    return { message: 'Updated post: ', newPost };   
+    
   } catch (err) {
     console.log(err);
-    throw new Error('Failed to create post');
+    return { error: "Failed to create post!" };
   }
-
-  revalidatePath('/dashboard/posts');
-  redirect('/dashboard/posts');
+ 
 };
 
 // DELETE USER (DELETE)

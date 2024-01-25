@@ -1,16 +1,13 @@
 import React from 'react';
-import { addPost } from '@/lib/actions/postActions';
-import AddPostForm from './AddPostForm';
 
-const AddPost: React.FC = () => {
+const SinglePostPage: React.FC = () => {
   return (
     <div className='max-w-sm mx-auto '>
       <h2 className='mt-4 font-semibold text-xl w-fit'>
         Lägg till nytt inlägg 
         <span className='block w-full transition-all duration-500 h-1 bg-[#ff4040] mb-4'></span>
       </h2>
-      <AddPostForm />
-     {/*  <form action={addPost} className='mb-5'>
+      <form action={''} className='mb-5'>
       <div className='mb-5'>
           <label
             htmlFor='title'
@@ -75,9 +72,9 @@ const AddPost: React.FC = () => {
         >
           Submit
         </button>
-      </form> */}
+      </form>
     </div>
   );
 };
 
-export default AddPost;
+export default SinglePostPage;

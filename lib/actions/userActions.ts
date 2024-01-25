@@ -48,15 +48,16 @@ export const addUser = async (prevState: any, formData: FormData) => {
       desc,
     });
     await newUser.save();
+   
+    return { message: 'User added: ', name }
     revalidatePath("/dashboard/users");
     redirect('/dashboard/users')
-    return { message: 'User added: ', name }
    
   } catch (err) {
     console.log(err);
     return { error: "Failed to add user!" };
   }
- 
+
 };
 
 

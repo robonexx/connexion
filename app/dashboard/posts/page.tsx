@@ -20,8 +20,6 @@ const Posts = async ({ searchParams }: SearchTypes) => {
   const page = searchParams?.page || '1';
 
   const { count, posts } = await fetchPosts(q, page);
-
-  console.log('loggin all posts:', posts);
   return (
     <div className='relative flex min-h-screen h-full w-full flex-col items-center mt-20 red-gradient'>
       <h1>Post Page!</h1>
@@ -29,15 +27,16 @@ const Posts = async ({ searchParams }: SearchTypes) => {
         <CustomLink href='/dashboard/posts/add' />
       </nav>
       <PostsList>
-        {posts.map(({ _id, createdAt, title, tags, body, image }) => (
+        {posts.map(({ _id, createdAt, title, tags, body, image, author }) => (
           <PostItem
             key={_id}
             title={title}
-            date={convertDate(createdAt)}
+            createdAt={createdAt}
             body={body}
             tags={tags}
-            id={_id.toString()}
+            _id={_id}
             image={image}
+            author={author}
           />
         ))}
       </PostsList>

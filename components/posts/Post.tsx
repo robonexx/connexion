@@ -2,64 +2,43 @@ import Image from "next/image";
 import Link from "next/link";
 import DeleteButton from "../delete-button/DeleteButton";
 import { getServerSession } from "next-auth/next";
+import ImageContainer from "../image-container/ImageContainer";
 /* import { authOptions } from "@/app/api/auth/[...nextauth]/route"; */
-
-interface PostProps {
-  id: string;
-  author: string;
-  date: string;
-  thumbnail?: string;
-  authorEmail?: string;
-  title: string;
-  content: string;
-  link?: string;
-  category?: string;
-}
+import { PostItemProps } from "@/types/Types";
+import { convertDate } from "@/utils/convertDate";
+import { timeAgo } from "@/utils/timeAgo";
 
 const Post = ({
-  id,
-  author,
-  date,
-  thumbnail,
-  authorEmail,
+  _id,
   title,
-  content,
+  createdAt,
+  image,
+  body,
   link,
+  author,
   category,
-}: PostProps) => {
+}: PostItemProps) => {
  /*  const session = await getServerSession(); */
 
     /* const isEditable = session && session?.user?.id === author.id; */
-
-  const dateObject = new Date(date);
-  const options: Intl.DateTimeFormatOptions = {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  };
-
-  const formattedDate = dateObject.toLocaleDateString("en-US", options);
 
   return (
     <div className="my-4 border-b border-b-300 py-8">
       <div className="mb-4">
         {author ? (
           <>
-            Posted by: <span className="font-bold">{author}</span> on{" "}
-            {formattedDate}
+            Posted by: <span className="font-bold">{author.name}</span> on{" "}
+            {convertDate(createdAt)}
           </>
         ) : (
-          <>Posted on {formattedDate}</>
+          <>Posted: {timeAgo(createdAt)}</>
         )}
       </div>
 
       <div className="w-full h-72 relative">
-        {thumbnail ? (
-          <Image
-            src={thumbnail}
-            alt={title}
-            fill
-            className="object-cover rounded-md object-center"
+        {image ? (
+          <ImageContainer
+            imageData={image}
           />
         ) : (
           <Image
@@ -81,7 +60,7 @@ const Post = ({
       )}
 
       <h2>{title}</h2>
-      <p className="content">{content}</p>
+      <p className="content">{body}</p>
             <div className="flex gap-2 items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

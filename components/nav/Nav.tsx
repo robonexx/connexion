@@ -23,6 +23,10 @@ const Nav = () => {
     setDropdownOpen(!isDropdownOpen);
   };
 
+  if (!session?.user) {
+    return <div className='h-[120px]'></div>
+  }
+
   return (
     <nav className='bg-black p-4 md:ml-[200px] flex items-center justify-between h-[60px] max-w-full'>
       <button className='md:hidden text-white' onClick={toggleMenu}>

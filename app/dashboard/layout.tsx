@@ -14,13 +14,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
   const showMessage = (role: string) => {
     if (role === 'admin') {
-      return 'Welcome! Time to be the BOSS'
+      return 'Welcome! BOSS! Let`s shine!'
     }
     if (role === 'student') {
-      return 'Today we will shine! lets go!'
+      return 'An other day and other struggle'
     }
     if (role === 'teacher') {
-      return 'Time to share that knowledge! :D'
+      return 'Time to share that knowledge! For the people :D'
     }
   }
   return (
