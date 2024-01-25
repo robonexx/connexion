@@ -1,83 +1,162 @@
-/* import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
+import { updateUser } from '@/lib/actions/userActions';
+import { fetchUser } from '@/lib/data/userData';
+import Avatar from '@/components/avatar/Avatar';
+import { CgProfile } from 'react-icons/cg';
 
-interface User {
-  id: string;
-  username: string;
-  email: string;
-  password: string;
-  phone: string;
-  info: string;
-    role: string;
-  isActive: boolean;
-  img?: string;
-} */
+const SingleUserPage = async ({ params }: { params: any }) => {
+  const { id } = params;
+  console.log(id);
+  const user = await fetchUser(id);
 
-const SingleUserPage = () => {
- /*  const router = useRouter();
-  const { id } = router.query;
-
-  const [user, setUser] = useState<User | null>(null); */
-
-  /* useEffect(() => {
-   
-    const fetchUserData = async () => {
-      try {
-        const fetchedUser = await fetchUser(id);
-        setUser(fetchedUser);
-      } catch (error) {
-        console.error('Error fetching user data', error);
-      }
-    };
-
-    if (id) {
-      fetchUserData();
-    }
-  }, [id]); */
-
- /*  const updateUser = async (event: React.FormEvent) => {
-    event.preventDefault();
-    // Implement your update logic using the user data
-  }; */
-
-  /* if (!user) {
-    return <div>Loading...</div>;
-  } */
+  console.log(user);
 
   return (
-    <div className='flex gap-12 mt-5'>
-      <div className='flex-1 p-5 rounded-sm font-semibold h-max-fit'>
-        {/* <div className='relative w-full h-64 rounded-sm overflow-hidden mb-5'>
-          <Image src={user.img || '/images/rob12.png'} alt="" fill />
+    <div className='flex flex-col md:flex-row gap: 12 lg:gap-16 mt-5'>
+      <div className='flex flex-col items-center p-5 rounded-sm font-semibold h-max-fit'>
+        <div className='relative w-fit h-fit rounded-sm overflow-hidden mb-5'>
+          {user.image ? (
+            <Avatar image={user.image} width={112} height={112} />
+          ) : (
+            <CgProfile className='w-16 h-16' />
+          )}
         </div>
-        {user.username}
+        <h2 className='font-semibold text-2xl'>
+          {user.fullname.toUpperCase()}
+        </h2>
       </div>
-      <div className='flex p-5 w-full max-w-xs'>
-        <form onSubmit={updateUser} className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4'>
-          <input type="hidden" name="id" value={user.id} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
-          <label className="block text-gray-700 text-sm font-bold mb-2">Username</label>
-          <input type="text" name="username" placeholder={user.username} />
-          <label>Email</label>
-          <input type="email" name="email" placeholder={user.email} />
-          <label>Password</label>
-          <input type="password" name="password" />
-          <label>Phone</label>
-          <input type="text" name="phone" placeholder={user.phone} />
-          <label>Info</label>
-          <textarea name="info" placeholder={user.info}></textarea>
-          <label>Teacher or Student</label>
-          <select name="role" id="role">
-          <option value={'Teacher'}>Teacher</option>
-            <option value={'Student'}>Student</option>
-          </select>
-          <label>Is Active?</label>
-          <select name="isActive" id="isActive" defaultValue={user.isActive.toString()}>
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-          </select>
-          <button type="submit">Update</button>
-        </form> */}
+      <div className='flex p-5 w-full max-w-xs m-auto'>
+        <form action={updateUser} className='mb-5 w-full'>
+          <h2 className='text-center my-4'>USER INFO - UPDATE USER</h2>
+          <input type="hidden" name="id" value={user.id}/>
+          <div className='mb-5'>
+            <label
+              htmlFor='fullname'
+              className='block text-sm font-medium text-white'
+            >
+              Fullname
+            </label>
+            <input
+              type='text'
+              placeholder={user.fullname}
+              name='fullname'
+              className='mt-1 p-2 w-full border rounded-md bg-transparent placeholder:text-xs'
+            />
+          </div>
+          <div className='mb-5'>
+            <label
+              htmlFor='name'
+              className='block text-sm font-medium text-white'
+            >
+              Username
+            </label>
+            <input
+              type='text'
+              placeholder={user.name}
+              name='name'
+              className='mt-1 p-2 w-full border rounded-md bg-transparent placeholder:text-xs'
+            />
+          </div>
+          <div className='mb-5'>
+            <label
+              htmlFor='email'
+              className='block text-sm font-medium text-white'
+            >
+              Email
+            </label>
+            <input
+              type='email'
+              placeholder={user.email}
+              name='email'
+              className='mt-1 p-2 w-full border rounded-md bg-transparent placeholder:text-xs'
+            />
+          </div>
+          <div className='mb-5'>
+            <label
+              htmlFor='password'
+              className='block text-sm font-medium text-white'
+            >
+              Password
+            </label>
+            <input
+              type='password'
+              placeholder={user.password}
+              name='password'
+              className='mt-1 p-2 w-full border rounded-md bg-transparent placeholder:text-xs'
+            />
+          </div>
+          <div className='mb-4'>
+            <label
+              htmlFor='role'
+              className='block text-sm font-medium text-white'
+            >
+              Role{' '}
+              <span className='font-thin text-xs font-mono'>
+                (current role: {user.role})
+              </span>
+            </label>
+            <select
+              id='role'
+              name='role'
+              className='mt-1 p-2 w-full border rounded-md bg-transparent text-xs font-thin'
+            >
+              <option
+                value='teacher'
+                className='text-gray-600 text-xs bg-transparent rounded-none'
+              >
+                Teacher
+              </option>
+              <option
+                value='student'
+                className='text-gray-600 text-xs bg-transparent'
+              >
+                Student
+              </option>
+            </select>
+          </div>
+          <div className='mb-4'>
+            <label
+              htmlFor='desc'
+              className='block text-sm font-medium text-white'
+            >
+              Start år{' '}
+              <span className='font-thin text-xs font-mono'>
+                (exempel 2022)
+              </span>
+            </label>
+            <input
+              type='number'
+              placeholder={user.startYear ? user.startYear : 'no start year'}
+              name='startYear'
+              className='mt-1 p-2 w-full border rounded-md bg-transparent placeholder:text-xs'
+            />
+          </div>
+          <div className='mb-5'>
+            <label
+              htmlFor='desc'
+              className='block text-sm font-medium text-white'
+            >
+              Beskrining{' '}
+              <span className='font-thin text-xs font-mono'>(optional)</span>
+            </label>
+            <textarea
+              rows={5}
+              placeholder={user.desc ? user.desc : 'no description yet'}
+              name='desc'
+              className='mt-1 p-2 w-full border rounded-md bg-transparent placeholder:text-xs'
+            />
+          </div>
+          <button
+            type='submit'
+            className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+          >
+            Upate
+          </button>
+          {/*  {state?.error && (
+        <div className='text-white bg-zinc-500 p-3 rounded-md'>
+          {state.error}
+        </div>
+      )} */}
+        </form>
       </div>
     </div>
   );

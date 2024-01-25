@@ -49,6 +49,7 @@ export const addUser = async (prevState: any, formData: FormData) => {
     });
     await newUser.save();
     revalidatePath("/dashboard/users");
+    redirect('/dashboard/users')
     return { message: 'User added: ', name }
    
   } catch (err) {
@@ -58,6 +59,62 @@ export const addUser = async (prevState: any, formData: FormData) => {
  
 };
 
+
+// UPDATE
+type UpdateFields = {
+  fullname?: string;
+  name?: string;
+  email?: string;
+  password?: string;
+  role?: string;
+  startYear?: string;
+  desc?: string;
+};
+
+export const updateUser = async (formData: FormData) => {
+  const { id, fullname, name, email, password, role, startYear, desc } =
+    Object.fromEntries(formData);
+  
+  console.log('the id from update params: ', id + 'for user: ', name)
+
+  try {
+    connectToDB();
+
+    // will change this, works for now
+    const updatedFields: UpdateFields = {
+      fullname: fullname as any,
+      name: name as any,
+      email: email as any,
+      password: password as any,
+      role: role as any,
+      startYear: startYear as any,
+      desc: desc as any,
+    };
+
+    Object.keys(updatedFields).forEach((key) => {
+      if (updatedFields[key as keyof UpdateFields] === '' || updatedFields[key as keyof UpdateFields] === undefined) {
+        delete updatedFields[key as keyof UpdateFields];
+      }
+    });
+
+    
+    if (Object.keys(updatedFields).length === 0) {
+      // No fields to update, return early
+      return { message: 'No fields to update' };
+    }
+
+    // Update the user
+    await User.findByIdAndUpdate(id, updatedFields);
+    revalidatePath("/dashboard/users");
+    redirect('/dashboard/users')
+    return { message: 'Updated added: ', name };   
+  } catch (err) {
+    console.log(err);
+    return { error: "Failed to update user!" };
+  }
+};
+
+
 // DELETE USER (DELETE)
 export const deleteUser = async (formData: FormData) => {
   const { id } = Object.fromEntries(formData);
@@ -66,7 +123,8 @@ export const deleteUser = async (formData: FormData) => {
     connectToDB();
     await User.findByIdAndDelete(id);
     console.log('User with the id:', id + ' was deleted succcessfully');
-    revalidatePath('/dashboard/users');
+    revalidatePath("/dashboard/users");
+    redirect('/dashboard/users')
     return { message: "deleted user with the id: ", id };
   } catch (err) {
     console.log(err);

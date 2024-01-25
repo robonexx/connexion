@@ -14,7 +14,7 @@ export const fetchUsers = async (q: string, page:string) => {
       name: { $regex: regex },
       role: { $ne: 'admin' } // Exclude users with the role 'admin'
     }).limit(LIMIT_ITEMS).skip(LIMIT_ITEMS * (parseInt(page) - 1));
-
+    
     return { count, users };
   } catch (err) {
     console.log(err);

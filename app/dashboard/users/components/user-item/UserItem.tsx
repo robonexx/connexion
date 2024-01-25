@@ -47,7 +47,7 @@ const UserItem = ({
       </td>
       <td className='px-6 py-4 hover:bg-zinc-800 cursor-pointer'>{role}</td>
       <td className='px-6 py-4 cursor-pointer border-b-2 grid place-content-center'>
-        <CustomLink href='' title='VIEW' className='text-white' />
+        <CustomLink href={`/dashboard/users/${userId}`} title='VIEW' className='text-white' />
       </td>
       <td className='px-6 py-4 cursor-pointer'>
         <form action={deleteUser}>
