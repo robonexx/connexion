@@ -22,7 +22,7 @@ const Header = () => {
         
       >
         <Image
-          className='h-16 w-16 object-contain relative drop-shadow-[1px_2px_5px_#ff404080]'
+          className='h-16 w-16 object-contain relative drop-shadow-[5px_5px_10px_#fa4040]'
           src='/dclogo-vit.png'
           alt='danscenter logo'
           width={64}
