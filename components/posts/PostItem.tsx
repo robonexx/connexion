@@ -1,6 +1,7 @@
 import React from 'react';
 import Tag from '../tag/Tag';
 import { timeAgo } from '@/utils/timeAgo';
+import ImageContainer from '../image-container/ImageContainer';
 
 interface PostItemProps {
   date: string;
@@ -8,9 +9,10 @@ interface PostItemProps {
   tags: string[];
   body: string;
   id: string;
+  image: string;
 }
 
-const PostItem: React.FC<PostItemProps> = ({ date, title, tags, body, id }) => {
+const PostItem: React.FC<PostItemProps> = ({ date, title, tags, body, id, image }) => {
   console.log('post id: ', id)
   return (
     <div className='py-5'>
@@ -31,6 +33,7 @@ const PostItem: React.FC<PostItemProps> = ({ date, title, tags, body, id }) => {
                 {title}
               </a>
             </h2>
+            {image && <ImageContainer imageData={image} />}
             <div className='flex flex-wrap'>
               {tags.map((tag, index) => (
                 /*  <a

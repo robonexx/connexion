@@ -29,7 +29,7 @@ const Posts = async ({ searchParams }: SearchTypes) => {
         <CustomLink href='/dashboard/posts/add' />
       </nav>
       <PostsList>
-        {posts.map(({ _id, createdAt, title, tags, body }) => (
+        {posts.map(({ _id, createdAt, title, tags, body, image }) => (
           <PostItem
             key={_id}
             title={title}
@@ -37,6 +37,7 @@ const Posts = async ({ searchParams }: SearchTypes) => {
             body={body}
             tags={tags}
             id={_id.toString()}
+            image={image}
           />
         ))}
       </PostsList>

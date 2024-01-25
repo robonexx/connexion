@@ -23,7 +23,7 @@ export const authOptions: AuthOptions = {
           const user = await User.findOne({ name: credentials.name });
   
           if (!user || !user?.password) {
-            throw new Error("Invalid email or password");
+            throw new Error("Invalid username or password");
             }
   
             async function PasswordsMatch(password1: string, password2: string) {

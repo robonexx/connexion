@@ -9,6 +9,19 @@ const AddPost: React.FC = () => {
         <span className='block w-full transition-all duration-500 h-1 bg-[#ff4040] mb-4'></span>
       </h2>
       <form action={addPost} className='mb-5'>
+      <div className='mb-5'>
+          <label
+            htmlFor='title'
+            className='block text-sm font-medium text-white'
+          >
+            Image
+          </label>
+          <input
+            type='file'
+            name='image'
+            className='mt-1 p-2 w-full border rounded-md bg-transparent placeholder:text-xs'
+          />
+        </div>
         <div className='mb-5'>
           <label
             htmlFor='title'
