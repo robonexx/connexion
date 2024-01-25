@@ -12,7 +12,7 @@ interface PostProps {
   authorEmail?: string;
   title: string;
   content: string;
-  links?: string[];
+  link?: string;
   category?: string;
 }
 
@@ -24,7 +24,7 @@ const Post = ({
   authorEmail,
   title,
   content,
-  links,
+  link,
   category,
 }: PostProps) => {
  /*  const session = await getServerSession(); */
@@ -82,11 +82,7 @@ const Post = ({
 
       <h2>{title}</h2>
       <p className="content">{content}</p>
-
-      {links && (
-        <div className="my-4 flex flex-col gap-3">
-          {links.map((link, i) => (
-            <div key={i} className="flex gap-2 items-center">
+            <div className="flex gap-2 items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -102,13 +98,10 @@ const Post = ({
                 />
               </svg>
 
-              <Link className="link" href={link}>
+              <Link className="link" href={`${link}`}>
                 {link}
               </Link>
             </div>
-          ))}
-        </div>
-      )}
 
      {/*  {isEditable && (
         <div className="flex gap-3 font-bold py-2 px-4 rounded-md bg-slate-200 w-fit">

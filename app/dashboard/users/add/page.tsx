@@ -1,6 +1,7 @@
 import React from 'react';
 import { addUser } from '@/lib/actions/userActions';
 import { Input } from '@/components/input-field/InputField';
+import RegisterForm from './RegisterForm';
 
 const AddUser: React.FC = () => {
   return (
@@ -9,8 +10,8 @@ const AddUser: React.FC = () => {
         Lägg till elever eller lärare
         <span className='block w-full transition-all duration-500 h-1 bg-[#ff4040] mb-4'></span>
       </h2>
-
-      <form action={addUser} className='mb-5 w-full'>
+        <RegisterForm />
+      {/* <form action={addUser} className='mb-5 w-full'>
         <div className='mb-5'>
           <label
             htmlFor='fullname'
@@ -100,24 +101,6 @@ const AddUser: React.FC = () => {
             </option>
           </select>
         </div>
-        {/*  <div className='mb-5'>
-          <label
-            htmlFor='isActive'
-            className='block text-sm font-medium text-white'
-          >
-            Is Active?
-          </label>
-          <select
-            name='isActive'
-            id='isActive'
-            required
-            className='mt-1 p-2 w-full border rounded-md bg-transparent placeholder:text-xs'
-          >
-            <option value={'true'}>Is Active?</option>
-            <option value={'Yes'}>Yes</option>
-            <option value={'No'}>No</option>
-          </select>
-        </div> */}
         <div className='mb-4'>
           <label
             htmlFor='desc'
@@ -154,7 +137,7 @@ const AddUser: React.FC = () => {
         >
           Submit
         </button>
-      </form>
+      </form> */}
     </div>
   );
 };

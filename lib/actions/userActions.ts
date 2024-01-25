@@ -5,8 +5,24 @@ import User from '../models/User';
 /* import bcrypt from 'bcrypt'; */
 import { connectToDB } from '../db';
 
+// could use zod like many seems to do to check types
+
+
 // ADD USER
-export const addUser = async (formData: FormData) => {
+export const addUser = async (prevState: any, formData: FormData) => {
+
+  if (formData === null || formData === undefined || !formData.entries) {
+    return { error: 'no data in form submit' };
+  }
+
+  const requiredFields = ['fullname', 'name', 'email', 'password', 'role'];
+
+  for (const field of requiredFields) {
+    if (!formData.has(field)) {
+      return { error: `Missing required field: ${field}` };
+    }
+  }
+
   const { fullname, name, email, password, role, startYear, desc } =
     Object.fromEntries(formData);
   // if admin adds student no need for email confirmation
@@ -15,7 +31,7 @@ export const addUser = async (formData: FormData) => {
     connectToDB();
 
     // extracting the password as a string from the formdata
-    const extractedPassword: string = password as string;
+    /* const extractedPassword: string = password as string; */
 
     // adding the hashed password
    /*  const salt = await bcrypt.genSalt(10);
@@ -32,13 +48,14 @@ export const addUser = async (formData: FormData) => {
       desc,
     });
     await newUser.save();
+    revalidatePath("/dashboard/users");
+    return { message: 'User added: ', name }
+   
   } catch (err) {
     console.log(err);
-    throw new Error('Failed to create user');
+    return { error: "Failed to add user!" };
   }
-
-  revalidatePath('/dashboard/users');
-  redirect('/dashboard/users');
+ 
 };
 
 // DELETE USER (DELETE)
@@ -49,10 +66,10 @@ export const deleteUser = async (formData: FormData) => {
     connectToDB();
     await User.findByIdAndDelete(id);
     console.log('User with the id:', id + ' was deleted succcessfully');
+    revalidatePath('/dashboard/users');
+    return { message: "deleted user with the id: ", id };
   } catch (err) {
     console.log(err);
-    throw new Error('Failed to delete user!');
+    return { message: "Failed to delete user!" };
   }
-
-  revalidatePath('/dashboard/products');
 };
