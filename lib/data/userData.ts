@@ -24,7 +24,7 @@ export const fetchUsers = async (q: string, page:string) => {
 
 // GET SINGLE USER BY ID
 export const fetchUser = async (id: string) => {
-    console.log(id);
+    /* console.log(id); */
     try {
       connectToDB();
       const user = await User.findById(id);

@@ -7,6 +7,8 @@ import ImageContainer from "../image-container/ImageContainer";
 import { PostItemProps } from "@/types/Types";
 import { convertDate } from "@/utils/convertDate";
 import { timeAgo } from "@/utils/timeAgo";
+import CustomLink from "../custom-link/CustomLink";
+import { VscEye } from "react-icons/vsc";
 
 const Post = ({
   _id,
@@ -23,7 +25,7 @@ const Post = ({
     /* const isEditable = session && session?.user?.id === author.id; */
 
   return (
-    <div className="my-4 border-b border-[#888] py-8 max-w-96">
+    <div className="relative my-4 border-b border-[#888] py-8 max-w-96">
       <div className="mb-4">
         {author ? (
           <>
@@ -80,7 +82,15 @@ const Post = ({
               <Link className="link" href={`${link}`}>
                 {link}
               </Link>
-            </div>
+      </div>
+      
+      <Link
+          href={`/dashboard/posts/${_id}`}
+          title=''
+          className='text-white text-xl w-fit absolute right-2 bottom-2 top-auto flex items-center'
+        >
+        <span className='text-xs font-mono mx-1'>Read more</span> <VscEye />
+        </Link>
 
      {/*  {isEditable && (
         <div className="flex gap-3 font-bold py-2 px-4 rounded-md bg-slate-200 w-fit">
