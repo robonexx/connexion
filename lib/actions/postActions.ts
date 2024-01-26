@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import Post from '../models/Post';
 import { connectToDB } from '../db';
 
-// ADD USER
+// ADD POST
 export const addPost = async (prevState: any, formData: FormData) => {
   const { title, link, body, id } =
     Object.fromEntries(formData);
@@ -38,6 +38,64 @@ export const addPost = async (prevState: any, formData: FormData) => {
   }
  
 };
+
+// UPDATE POST
+type UpdatePostFields = {
+  title?: string;
+  link?: string;
+  body?: string;
+  image?: string;
+};
+
+export const updatePost = async (formData: FormData) => {
+  const { title, link, body, id } = Object.fromEntries(formData);
+
+  let currImage = '';
+
+  // Check if a new image is provided
+  const newImageFile = formData.get('image') as File;
+  if (newImageFile) {
+    const arrayBuffer = await newImageFile.arrayBuffer();
+    const buffer = new Uint8Array(arrayBuffer);
+    // Convert Uint8Array to base64
+    currImage = Buffer.from(buffer).toString('base64');
+  }
+
+  try {
+    connectToDB();
+
+    const updatedFields: UpdatePostFields = {
+      title: title as any,
+      link: link as any,
+      body: body as any,
+      image: currImage,
+    };
+
+    Object.keys(updatedFields).forEach((key) => {
+      if (
+        updatedFields[key as keyof UpdatePostFields] === '' ||
+        updatedFields[key as keyof UpdatePostFields] === undefined
+      ) {
+        delete updatedFields[key as keyof UpdatePostFields];
+      }
+    });
+
+    if (Object.keys(updatedFields).length === 0) {
+      // No fields to update, return early
+      return { message: 'No fields to update' };
+    }
+
+    // Update the post
+    await Post.findByIdAndUpdate(id, updatedFields);
+    revalidatePath("/dashboard/posts");
+    return { message: 'Post updated' };
+
+  } catch (err) {
+    console.log(err);
+    return { error: "Failed to update post!" };
+  }
+};
+
 
 // DELETE USER (DELETE)
 export const deletePost = async (formData: FormData) => {

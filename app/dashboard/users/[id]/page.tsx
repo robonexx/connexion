@@ -5,10 +5,10 @@ import { CgProfile } from 'react-icons/cg';
 
 const SingleUserPage = async ({ params }: { params: any }) => {
   const { id } = params;
-  console.log(id);
+
   const user = await fetchUser(id);
 
-  console.log(user);
+
 
   return (
     <div className='flex flex-col md:flex-row gap: 12 lg:gap-16 mt-5'>
