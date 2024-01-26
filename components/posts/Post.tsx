@@ -23,7 +23,7 @@ const Post = ({
     /* const isEditable = session && session?.user?.id === author.id; */
 
   return (
-    <div className="my-4 border-b border-b-300 py-8">
+    <div className="my-4 border-b border-[#888] py-8 max-w-96">
       <div className="mb-4">
         {author ? (
           <>

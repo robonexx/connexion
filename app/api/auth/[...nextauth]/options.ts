@@ -56,7 +56,7 @@ export const authOptions: AuthOptions = {
                   token.startYear = user.startYear;
               }
       
-              console.log('token from jwt', token);
+             /*  console.log('token from jwt', token); */
               return token;
           },
       async session({ session }) {
@@ -65,7 +65,7 @@ export const authOptions: AuthOptions = {
   
         session.user = mongodbUser
   
-        console.log('session data: ',session.user)
+       /*  console.log('session data: ',session.user) */
   
         return session
       }
