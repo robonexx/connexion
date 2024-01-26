@@ -6,7 +6,7 @@ export default withAuth(
     // `withAuth` augments your `Request` with the user's token.
     function middleware(request: NextRequestWithAuth) {
       // console.log(request.nextUrl.pathname)
-      // console.log(request.nextauth.token)
+      console.log(request.nextauth.token)
 
       if (request.nextUrl.pathname.startsWith("/dashboard")
           && request.nextauth.token?.role !== "admin") {
@@ -30,13 +30,28 @@ export default withAuth(
               new URL("/denied", request.url)
           )
       }
+      if (request.nextUrl.pathname.startsWith("/year1")
+          && request.nextauth.token?.role !== "admin"
+          && request.nextauth.token?.role !== "student") {
+          return NextResponse.rewrite(
+              new URL("/denied", request.url)
+          )
+      }
+      if (request.nextUrl.pathname.startsWith("/year2")
+          && request.nextauth.token?.role !== "admin"
+          && request.nextauth.token?.role !== "student") {
+          return NextResponse.rewrite(
+              new URL("/denied", request.url)
+          )
+      }
   },
   {
       callbacks: {
           authorized: ({ token }) => !!token
       },
       pages: {
-          signIn: '/auth/login'
+          signIn: '/auth/login',
+          signOut: '/'
     }
   })
 

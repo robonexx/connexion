@@ -1,5 +1,6 @@
-import NextAuth, {AuthOptions} from "next-auth";
-import Credentials from "next-auth/providers/credentials";
+import NextAuth from "next-auth";
+import { authOptions } from "./options";
+/* import Credentials from "next-auth/providers/credentials";
 
 import { connectToDB } from "@/lib/db";
 import User from "@/lib/models/User";
@@ -69,7 +70,7 @@ export const authOptions: AuthOptions = {
       return session
     }
   }
-};
+}; */
 
 const handler = NextAuth(authOptions);
 

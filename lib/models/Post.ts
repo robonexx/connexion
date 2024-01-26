@@ -12,6 +12,7 @@ interface IPost extends Document {
   createdAt: Date;
   updatedAt: Date;
   comments: IComment[];
+  categories?: string[];
   upvotes: Types.Array<Types.ObjectId>;
   downvotes: Types.Array<Types.ObjectId>;
     score: number;
@@ -56,7 +57,11 @@ const PostSchema = new Schema<IPost, IPostModel>(
     downvotes: [{
       type: Schema.Types.ObjectId,
       ref: 'User',
-  }],
+    }],
+    categories: {
+      type: [{ type: String }],
+      required: false,
+    },
   score: {
     type: Number,
     default: 0
