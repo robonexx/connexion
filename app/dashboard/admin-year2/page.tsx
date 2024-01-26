@@ -30,7 +30,7 @@ const Year2 = async ({ searchParams }: StudentProps) => {
 
   console.log(students);
   return (
-    <div className='h-full bg-gray-800 relative'>
+    <div className='h-full relative'>
       <div className='pl-20 pt-20 flex '>
         <SearchDashboard placeholder='search for users' />
         <Button tone='alt' impact='bordered' shape='rounded'>

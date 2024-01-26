@@ -23,7 +23,7 @@ const Users = async ({ searchParams }: UsersProps) => {
 
   /* console.log(users); */
   return (
-    <div className='h-full bg-gray-800 relative'>
+    <div className='h-full bg-transaparent relative'>
      
       <div className='pl-20 pt-20 flex '>
         <SearchDashboard placeholder='search for users' />
