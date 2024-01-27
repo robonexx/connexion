@@ -44,7 +44,6 @@ const LoginPage: React.FC = () => {
       if (res?.error) {
         console.log('Authentication error:', res.error);
         setError('Authentication error:');
-        /* router.push('/auth/login'); */
         setUser({
           name: '',
           password: '',
@@ -52,7 +51,6 @@ const LoginPage: React.FC = () => {
       }
       console.log('submitted form');
       setError('');
-      router.push('/dashboard');
     } catch (error) {
       console.log(error);
       setError('Error loggin in check password and name');
@@ -62,7 +60,7 @@ const LoginPage: React.FC = () => {
       });
     } finally {
       setLoading(false);
-
+      router.push('/dashboard');
       setUser({
         name: '',
         password: '',
