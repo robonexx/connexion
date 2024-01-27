@@ -39,6 +39,7 @@ const LoginPage: React.FC = () => {
         name: user.name,
         password: user.password,
         redirect: false,
+        callbackUrl: '/'
       });
 
       if (res?.error) {
@@ -60,7 +61,7 @@ const LoginPage: React.FC = () => {
       });
     } finally {
       setLoading(false);
-      router.push('/dashboard');
+      router.push('/home');
       setUser({
         name: '',
         password: '',
