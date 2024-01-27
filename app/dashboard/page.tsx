@@ -2,12 +2,10 @@
 /* 
 import { signOut, useSession } from 'next-auth/react'; */
 import React from 'react';
-import Sidebar from './_components/Sidebar';
 import Post from '@/components/posts/Post';
 import { PostItemProps } from '@/types/Types';
 import { fetchPosts } from '@/lib/data/postLoader';
 import Pagination from '@/components/pagination/Pagination';
-import { convertDate } from '@/utils/convertDate';
 
 const mockData: PostItemProps[] = [
   {

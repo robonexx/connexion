@@ -8,7 +8,7 @@ const connection: Connection = {};
 
 export const connectToDB = async (): Promise<void> => {
  
-  if (!process.env.MONGO_DB_URI) {
+  if (!process.env.MONGODB_URI) {
     throw new Error('MONGO_DB_URI is not defined in the environment variables.');
   }
 
@@ -18,7 +18,7 @@ export const connectToDB = async (): Promise<void> => {
   }
 
   try {
-    const db: Mongoose = await mongoose.connect(process.env.MONGO_DB_URI);
+    const db: Mongoose = await mongoose.connect(process.env.MONGODB_URI);
 
     // connection status to true if connected
     connection.isConnected = true;
@@ -26,7 +26,7 @@ export const connectToDB = async (): Promise<void> => {
     console.log('Database connected successfully.');
   } catch (error) {
     // Handle errors if there's an issue connecting to the database
-    console.error(`Error connecting to MongoDB at ${process.env.MONGO_DB_URI}:`, error);
+    console.error(`Error connecting to MongoDB at ${process.env.MONGODB_URI}:`, error);
 
     // Set status to false in case of an error
     connection.isConnected = false;

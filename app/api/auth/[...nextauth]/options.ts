@@ -40,31 +40,22 @@ export const authOptions: AuthOptions = {
     session: {
       strategy: "jwt"
   },
-  pages: {
-    signIn: '/auth/login',
-    error: '/auth/error',
-  },
   
     /* debug: process.env.NODE_ENV === 'development', */
   
       callbacks: {
           jwt: async ({ token, user }) => {
               if (user) {
-                  // Add user-specific claims to the token
                   token.role = user.role;
                   token.startYear = user.startYear;
               }
-      
-             /*  console.log('token from jwt', token); */
               return token;
           },
       async session({ session }) {
-        const mongodbUser = await User.findOne({ name: session.user.name }).select("-password")
+        const mongodbUser = await User.findOne({ name: session.user.name }).select({ password: 0, email: 0 })
         session.user.id = mongodbUser._id.toString()
   
         session.user = mongodbUser
-  
-       /*  console.log('session data: ',session.user) */
   
         return session
       }
