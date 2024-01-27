@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { CldImage } from "next-cloudinary";
 import DeleteButton from "../delete-button/DeleteButton";
 import { getServerSession } from "next-auth/next";
 import ImageContainer from "../image-container/ImageContainer";

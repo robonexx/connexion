@@ -1,7 +1,6 @@
 import { Document, Schema, Types, Model, model } from 'mongoose';
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 import CommentModel, { IComment } from './Comment';
-
 
 interface IPost extends Document {
   title: string;
@@ -12,11 +11,11 @@ interface IPost extends Document {
   createdAt: Date;
   updatedAt: Date;
   comments: IComment[];
-  categories?: string[];
+  category?: string;
   upvotes: Types.Array<Types.ObjectId>;
   downvotes: Types.Array<Types.ObjectId>;
-    score: number;
-    tags: string[];
+  score: number;
+  tags: string[];
 }
 
 interface IPostProps {
@@ -49,26 +48,31 @@ const PostSchema = new Schema<IPost, IPostModel>(
       ref: 'User',
       required: true,
     },
-    comments: [CommentModel.schema], 
-    upvotes: [{
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-    }],
-    downvotes: [{
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-    }],
-    categories: {
-      type: [{ type: String }],
+    comments: [CommentModel.schema],
+    upvotes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
+    downvotes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
+    category: {
+      type: String,
       required: false,
     },
-  score: {
-    type: Number,
-    default: 0
-        },
-        tags: {
-            type: [String],
-          },
+    score: {
+      type: Number,
+      default: 0,
+    },
+    tags: {
+      type: [String],
+      required: false,
+    },
   },
   {
     timestamps: true,
@@ -78,42 +82,42 @@ const PostSchema = new Schema<IPost, IPostModel>(
 // NEW
 // UPVOTE
 PostSchema.method('upvote', async function (this: IPost, userId: string) {
-  const userIdObject = new Types.ObjectId(userId)
+  const userIdObject = new Types.ObjectId(userId);
   if (this.upvotes.includes(userIdObject)) {
-    // could throw and error message here 
-    return
+    // could throw and error message here
+    return;
   } else if (this.downvotes.includes(userIdObject)) {
-    this.downvotes.pull(userId)
+    this.downvotes.pull(userId);
   }
 
-  this.upvotes.push(userIdObject)
-})
-
+  this.upvotes.push(userIdObject);
+});
 
 // NEW
 // DOWNVOTE
 PostSchema.method('downvote', async function (this: IPost, userId: string) {
-  const userIdObject = new Types.ObjectId(userId)
+  const userIdObject = new Types.ObjectId(userId);
   if (this.downvotes.includes(userIdObject)) {
-    // could throw and error message here 
-    return
+    // could throw and error message here
+    return;
   } else if (this.upvotes.includes(userIdObject)) {
-    this.upvotes.pull(userIdObject)
+    this.upvotes.pull(userIdObject);
   }
 
-  this.downvotes.push(userIdObject)
-})
+  this.downvotes.push(userIdObject);
+});
 
 // NEW
 // Checks if score is modified and counts out a new score
-PostSchema.pre<IPost>('save', function(next) {
+PostSchema.pre<IPost>('save', function (next) {
   if (this.isModified('upvotes') || this.isModified('downvotes')) {
-    this.score = this.upvotes?.length - this.downvotes?.length
+    this.score = this.upvotes?.length - this.downvotes?.length;
   }
-  next()
-})
+  next();
+});
 
-const Post = mongoose.models.Post || model<IPost, IPostModel>('Post', PostSchema);
+const Post =
+  mongoose.models.Post || model<IPost, IPostModel>('Post', PostSchema);
 
 export default Post;
 

@@ -18,7 +18,8 @@ export const addPost = async (prevState: any, formData: FormData) => {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     
-    // Convert Uint8Array to base64
+  // With the file data in buffer, we can manipulate it
+  // for this we will write it to the filesystem in a new location
     currImage = Buffer.from(buffer).toString('base64');
     
    /*  console.log('Image in base64:', currImage); */
