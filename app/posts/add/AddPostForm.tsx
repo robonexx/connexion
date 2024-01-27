@@ -15,8 +15,6 @@ const AddPostForm: React.FC = (previousState: any, formData: FormData) => {
   const { data: session } = useSession();
   const router = useRouter();
 
-  console.log('from add post session::', session?.user.id);
-
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {

@@ -6,7 +6,6 @@ import ImageContainer from '@/components/image-container/ImageContainer';
 
 const SinglePostPage = async ({ params }: { params: any }) => {
   const { id } = params;
-  console.log(id);
   const post = await fetchSinglePost(id);
 
   return (
