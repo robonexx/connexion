@@ -6,6 +6,8 @@ import Post from '@/components/posts/Post';
 import { PostItemProps } from '@/types/Types';
 import { fetchPosts } from '@/lib/data/postLoader';
 import Pagination from '@/components/pagination/Pagination';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../api/auth/[...nextauth]/options';
 
 const mockData: PostItemProps[] = [
   {
@@ -52,6 +54,9 @@ const Dashboard = async ({ searchParams }: SearchTypes) => {
  /*  const { data: session } = useSession(); */
   const q = searchParams?.q || '';
   const page = searchParams?.page || '1';
+
+  const session = await getServerSession(authOptions);
+  console.log('session from dashboard: ', session)
 
   const { count, posts } = await fetchPosts(q, page);
 
