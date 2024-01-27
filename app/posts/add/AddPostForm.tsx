@@ -22,7 +22,7 @@ const AddPostForm: React.FC = (previousState: any, formData: FormData) => {
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    state?.message && router.push('/dashboard/posts');
+    state?.message && router.push('/posts');
   }, [state?.message, router]);
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {

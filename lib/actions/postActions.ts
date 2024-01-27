@@ -33,7 +33,7 @@ export const addPost = async (prevState: any, formData: FormData) => {
     });
 
     await newPost.save();
-    revalidatePath('/dashboard/posts');
+    revalidatePath('/posts');
     return { message: 'Updated post: ', newPost };   
     
   } catch (err) {
@@ -91,7 +91,7 @@ export const updatePost = async (formData: FormData) => {
 
     // Update the post
     await Post.findByIdAndUpdate(id, updatedFields);
-    revalidatePath("/dashboard/posts");
+    revalidatePath("/posts");
     return { message: 'Post updated' };
 
   } catch (err) {
