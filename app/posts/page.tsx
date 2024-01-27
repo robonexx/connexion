@@ -1,10 +1,9 @@
 import React from 'react';
 import PostsList from '@/components/posts/PostsList';
-import PostItem from '@/components/posts/PostItem';
 import CustomLink from '@/components/custom-link/CustomLink';
 import Pagination from '@/components/pagination/Pagination';
 import { fetchPosts } from '@/lib/data/postLoader';
-import { convertDate } from '@/utils/convertDate';
+import Post from '@/components/posts/Post';
 
 // mockData will be updated to data from db
 
@@ -28,7 +27,7 @@ const Posts = async ({ searchParams }: SearchTypes) => {
       </nav>
       <PostsList>
         {posts.map(({ _id, createdAt, title, tags, body, image, author }) => (
-          <PostItem
+          <Post
             key={_id}
             title={title}
             createdAt={createdAt}

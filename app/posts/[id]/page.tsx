@@ -3,16 +3,22 @@ import { fetchSinglePost } from '@/lib/data/postLoader';
 import { updatePost } from '@/lib/actions/postActions';
 import Image from 'next/image';
 import ImageContainer from '@/components/image-container/ImageContainer';
+import DeletePostForm from '../delete/DeletePostForm';
+import { redirect } from 'next/navigation';
 
 const SinglePostPage = async ({ params }: { params: any }) => {
   const { id } = params;
-  console.log(id);
+ 
   const post = await fetchSinglePost(id);
 
+  if (!post) {
+    redirect('/posts');
+  }
+
   return (
-    <div className='max-w-sm mx-auto '>
+    <div className='max-w-sm mx-auto relative'>
       <h2 className='mt-4 font-semibold text-xl w-fit'>
-        Lägg till nytt inlägg
+        Updatera inlägg
         <span className='block w-full transition-all duration-500 h-1 bg-[#ff4040] mb-4'></span>
       </h2>
       <div className="w-full h-60 relative">
@@ -87,11 +93,14 @@ const SinglePostPage = async ({ params }: { params: any }) => {
         </div>
         <button
           type='submit'
-          className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+          className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-32 px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
         >
           Update Post
         </button>
       </form>
+      <div className='absolute bottom-0 right-0 left-auto'>
+     <DeletePostForm id={id} />
+      </div>
     </div>
   );
 };

@@ -33,7 +33,7 @@ export const addPost = async (prevState: any, formData: FormData) => {
     });
 
     await newPost.save();
-    revalidatePath('/dashboard/posts');
+    revalidatePath('/posts');
     return { message: 'Updated post: ', newPost };   
     
   } catch (err) {
@@ -66,7 +66,7 @@ export const updatePost = async (formData: FormData) => {
   }
 
   try {
-    connectToDB();
+   await connectToDB();
 
     const updatedFields: UpdatePostFields = {
       title: title as any,
@@ -91,7 +91,8 @@ export const updatePost = async (formData: FormData) => {
 
     // Update the post
     await Post.findByIdAndUpdate(id, updatedFields);
-    revalidatePath("/dashboard/posts");
+    revalidatePath("/posts");
+    redirect(`/posts/${id}`) // Navigate to the new post page
     return { message: 'Post updated' };
 
   } catch (err) {
@@ -105,14 +106,19 @@ export const updatePost = async (formData: FormData) => {
 export const deletePost = async (formData: FormData) => {
   const { id } = Object.fromEntries(formData);
 
+  console.log('post to delete: ', id)
+
   try {
-    connectToDB();
+    await connectToDB();
     await Post.findByIdAndDelete(id);
     console.log('Your post was deleted succcessfully');
+    revalidatePath('/posts');    
+    redirect(`/posts`)
+    return { message: `Deleted post with id: ${id}` }
   } catch (err) {
     console.log(err);
     throw new Error('Failed to delete post!');
   }
 
-  revalidatePath('/dashboard');
+ 
 };

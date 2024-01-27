@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import SubmitButton from '@/components/submit-button/SubmitButton';
 import { CldUploadButton } from 'next-cloudinary';
+import { resizeImage } from '@/utils/resizeImage';
 /* import toast from 'react-hot-toast' */
 
 
@@ -17,8 +18,6 @@ const AddPostForm: React.FC = (previousState: any, formData: FormData) => {
   const { data: session } = useSession();
   const router = useRouter();
 
-  console.log(session?.user._id);
-
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
@@ -28,13 +27,12 @@ const AddPostForm: React.FC = (previousState: any, formData: FormData) => {
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      // Preview image funcationality
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        // Using the reader.result for the preview of the image
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      try {
+        const resizedImageData = await resizeImage(file);
+        setImagePreview(resizedImageData);
+      } catch (error) {
+        console.error('Error resizing image:', error);
+      }
     }
   };
 
