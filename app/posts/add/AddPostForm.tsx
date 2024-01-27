@@ -2,22 +2,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useFormState } from 'react-dom';
-import { addPost } from '@/lib/actions/postActions';
+import { addPostWithFireBase } from '@/lib/actions/postActions';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
-import SubmitButton from '@/components/submit-button/SubmitButton';
-import { CldUploadButton } from 'next-cloudinary';
-/* import toast from 'react-hot-toast' */
+
 
 
 const AddPostForm: React.FC = (previousState: any, formData: FormData) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [state, formAction] = useFormState(addPost, undefined);
+  const [state, formAction] = useFormState(addPostWithFireBase, undefined);
 
   const { data: session } = useSession();
   const router = useRouter();
 
-  console.log(session?.user._id);
+  console.log('from add post session::', session?.user.id);
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -40,7 +38,7 @@ const AddPostForm: React.FC = (previousState: any, formData: FormData) => {
 
   return (
     <form action={formAction} className='mb-5' ref={formRef}>
-      <input type='hidden' name='id' value={session?.user._id} />
+      <input type='hidden' name='id' value={session?.user.id} />
     {/*   <CldUploadButton uploadPreset={process.env.CLD_PRESET} /> */}
        <div className='mb-5'>
         <label htmlFor='title' className='block text-sm font-medium text-white'>

@@ -12,10 +12,10 @@ const AddPostForm: React.FC = (previousState: any, formData: FormData) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [state, formAction] = useFormState(addPost, undefined);
 
-    const {data: session} = useSession()
-    const router = useRouter();
-    
-    console.log(session?.user._id)
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  console.log(session?.user._id);
 
   const ref = useRef<HTMLFormElement>(null);
 
@@ -37,8 +37,8 @@ const AddPostForm: React.FC = (previousState: any, formData: FormData) => {
   };
 
   return (
-      <form action={formAction} className='mb-5'>
-           <input type="hidden" name="id" value={session?.user._id}/>
+    <form action={formAction} className='mb-5'>
+      <input type='hidden' name='id' value={session?.user._id} />
       <div className='mb-5'>
         <label htmlFor='title' className='block text-sm font-medium text-white'>
           Image

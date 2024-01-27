@@ -3,6 +3,75 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import Post from '../models/Post';
 import { connectToDB } from '../db';
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import { app } from "@/lib/firebase";
+
+// ADD POST
+export const addPostWithFireBase = async (prevState: any, formData: FormData) => {
+  const { title, link, body, id, category } = Object.fromEntries(formData);
+
+  try {
+    const file: File | null = formData.get('image') as File;
+    let media = '';
+
+    if (file) {
+      const storage = getStorage(app);
+      const name = new Date().getTime() + file.name;
+      const storageRef = ref(storage, name);
+
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      await new Promise<void>((resolve, reject) => {
+        uploadTask.on(
+          'state_changed',
+          (snapshot) => {
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+            switch (snapshot.state) {
+              case 'paused':
+                console.log('Upload is paused');
+                break;
+              case 'running':
+                console.log('Upload is running');
+                break;
+            }
+          },
+          (error) => {
+            reject(error);
+          },
+          async () => {
+            media = await getDownloadURL(uploadTask.snapshot.ref);
+            resolve();
+          }
+        );
+      });
+    }
+
+    connectToDB();
+
+    // Use the media (Firebase Storage URL) obtained from Firebase Storage
+    const newPost = new Post({
+      title,
+      link,
+      body,
+      author: id,
+      image: media,
+      category,
+    });
+
+    await newPost.save();
+    revalidatePath('/posts');
+    return { message: 'Updated post: ', newPost };
+  } catch (err) {
+    console.error(err);
+    return { error: 'Failed to create post!' };
+  }
+};
 
 // ADD POST
 export const addPost = async (prevState: any, formData: FormData) => {
