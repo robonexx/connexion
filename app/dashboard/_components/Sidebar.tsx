@@ -58,12 +58,12 @@ const SidebarMenuItems: SidebarMenuItem[] = [
     icon: <MdPersonAddAlt />,
   },
   {
-    href: '/dashboard/posts',
+    href: '/posts',
     title: 'Inlägg',
     icon: <TiDocumentText />,
   },
   {
-    href: '/dashboard/posts/add',
+    href: '/posts/add',
     title: 'Nytt inlägg',
     icon: <MdPostAdd />,
   },

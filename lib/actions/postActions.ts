@@ -11,9 +11,12 @@ export const addPost = async (prevState: any, formData: FormData) => {
   
     let currImage = '';
 
-    const file = formData.get('image') as File;
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = new Uint8Array(arrayBuffer);
+  const file: File | null = formData.get('image') as unknown as File;
+  if (!file) {
+    return {message: 'no image added'}
+  }
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
     
     // Convert Uint8Array to base64
     currImage = Buffer.from(buffer).toString('base64');
