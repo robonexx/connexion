@@ -12,9 +12,12 @@ export const fetchPosts = async (q: string, page:string) => {
       // similar to what I leanred from Staffan Enberg getting all posts but now use it to get all users
       const count = await Post.countDocuments()
         const posts = await Post.find({ title: { $regex: regex } },  '-comments').limit(LIMIT_ITEMS).skip(LIMIT_ITEMS * (parseInt(page) - 1)).sort({ createdAt: 'descending' })
-        .populate('author')
+        .populate('author', '-password')
         .exec();
-      return { count, posts };
+      
+      const plainPosts = posts.map(post => post.toObject());
+      
+      return { count, posts: plainPosts };
     } catch (err) {
         console.log(err)
         throw new Error('Failed to fetch posts!')
@@ -22,7 +25,6 @@ export const fetchPosts = async (q: string, page:string) => {
 }
 
 export const fetchSinglePost = async (id: string) => {
-  console.log(id);
   try {
     connectToDB();
     const post = await Post.findById(id);

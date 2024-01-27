@@ -22,20 +22,15 @@ export const authOptions: AuthOptions = {
   
           const user = await User.findOne({ name: credentials.name });
   
-          if (!user || !user?.password) {
-            throw new Error("Invalid username or password");
-            }
-  
-            /* async function PasswordsMatch(password1: string, password2: string) {
-              return password1 === password2;
-          } */
+          if (!user || !user.password) return null
   
           const isMatch = await bcrypt.compare(credentials.password, user.password);
   
           if (!isMatch) {
+            
             throw new Error("Invalid password");
-          }
-  
+           
+          }  
           return user
         },
       }),
@@ -44,7 +39,11 @@ export const authOptions: AuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
     session: {
       strategy: "jwt"
-    },
+  },
+  pages: {
+    signIn: '/auth/login',
+    error: '/auth/error',
+  },
   
     /* debug: process.env.NODE_ENV === 'development', */
   

@@ -33,7 +33,7 @@ const Posts = async ({ searchParams }: SearchTypes) => {
             createdAt={createdAt}
             body={body}
             tags={tags}
-            _id={_id}
+            _id={_id.toString()}
             image={image}
             author={author}
           />

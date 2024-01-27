@@ -4,8 +4,7 @@ export interface PostItemProps {
     title: string;
     tags?: string[];
     body: string;
-   
-    image?: string; // Make it optional
+    image?: string;
     author: {
       _id: string;
       name: string;

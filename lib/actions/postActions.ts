@@ -6,7 +6,7 @@ import { connectToDB } from '../db';
 
 // ADD POST
 export const addPost = async (prevState: any, formData: FormData) => {
-  const { title, link, body, id } =
+  const { title, link, body, id, category } =
     Object.fromEntries(formData);
   
     let currImage = '';
@@ -29,7 +29,7 @@ export const addPost = async (prevState: any, formData: FormData) => {
 
     // creating the new user
     const newPost = new Post({
-        title, link, body, author: id, image: currImage,
+        title, link, body, author: id, image: currImage, category
     });
 
     await newPost.save();

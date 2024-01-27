@@ -103,7 +103,7 @@ const AddPostForm: React.FC = (previousState: any, formData: FormData) => {
       </div>
       <div className='mb-4'>
           <label
-            htmlFor='role'
+            htmlFor='category'
             className='block text-sm font-medium text-white'
           >
             Category{' '}
@@ -127,6 +127,25 @@ const AddPostForm: React.FC = (previousState: any, formData: FormData) => {
               className='text-gray-600 text-xs bg-transparent'
             >
               Students page
+            </option>
+            <option
+              value='studentYear1'
+              className='text-gray-600 text-xs bg-transparent'
+            >
+              Students Year 1
+            </option>
+            <option
+              value='studentYear2'
+              className='text-gray-600 text-xs bg-transparent'
+            >
+              Students Year 2
+          </option>
+          
+            <option
+              value='teachers'
+              className='text-gray-600 text-xs bg-transparent'
+            >
+              Teachers
             </option>
           </select>
         </div>
