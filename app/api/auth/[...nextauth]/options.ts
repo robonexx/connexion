@@ -1,7 +1,7 @@
 
 import {AuthOptions} from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-
+import bcrypt from 'bcrypt'
 import { connectToDB } from "@/lib/db";
 import User from "@/lib/models/User";
 
@@ -26,11 +26,11 @@ export const authOptions: AuthOptions = {
             throw new Error("Invalid username or password");
             }
   
-            async function PasswordsMatch(password1: string, password2: string) {
+            /* async function PasswordsMatch(password1: string, password2: string) {
               return password1 === password2;
-          }
+          } */
   
-          const isMatch = await PasswordsMatch(credentials.password, user.password);
+          const isMatch = await bcrypt.compare(credentials.password, user.password);
   
           if (!isMatch) {
             throw new Error("Invalid password");

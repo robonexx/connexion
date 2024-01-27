@@ -27,7 +27,7 @@ const Posts = async ({ searchParams }: SearchTypes) => {
         <CustomLink href='/dashboard/posts/add' />
       </nav>
       <PostsList>
-        {posts.map(({ _id, createdAt, title, tags, body, image, author }) => (
+        {posts ? posts.map(({ _id, createdAt, title, tags, body, image, author }) => (
           <PostItem
             key={_id}
             title={title}
@@ -38,7 +38,7 @@ const Posts = async ({ searchParams }: SearchTypes) => {
             image={image}
             author={author}
           />
-        ))}
+        )) : <div>NO POSTS YET!</div>}
       </PostsList>
       <Pagination count={count} />
     </div>
