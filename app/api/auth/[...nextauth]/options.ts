@@ -62,9 +62,22 @@ export const authOptions: AuthOptions = {
       }
       return session;
     },
+    async signIn({ user, account, profile, email, credentials }) {
+      const isAllowedToSignIn = true
+      if (isAllowedToSignIn) {
+        return true
+      } else {
+       
+        return false
+        
+      }
+    }
   },
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: 'jwt'
-  }
+  },
+  pages: {
+    signIn: "/auth/login",
+  },
 };
