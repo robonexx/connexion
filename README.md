@@ -23,6 +23,10 @@ authenticated user can enter /home
 
 (thats about it for now, more to be added, pages for differetn classes, notes page, setting and profile for each user to be entered with their own content and info)
 
+everyone should be able to add posts /posts
+
+admin should be able to add user and update them also delete the users
+
 Focus was on creating a prototype and to learn role based authentication
 This project will continue and be released in august of 2024 as a communication app 
 
