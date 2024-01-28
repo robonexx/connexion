@@ -61,13 +61,13 @@ const UserItem = ({
       </td>
       <td className='px-5 py-4 cursor-pointer'>
         <form action={deleteUser} className='w-full'>
-          <input
-            type='hidden'
-            name='id'
-            value={userId}
-            className='w-fit'
-          />
-          <VscTrash className='text-white hover:text-[#ff4040] md:mx-6' />
+          <input type='hidden' name='id' value={userId} className='w-fit' />
+          <button
+            type='submit'
+            className='hover:bg-[#888] px-3 py-2 rounded-md'
+          >
+            <VscTrash className='text-white hover:text-[#ff4040]' />
+          </button>
         </form>
       </td>
     </tr>
