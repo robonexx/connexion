@@ -3,6 +3,7 @@ import { fetchSinglePost } from '@/lib/data/postLoader';
 import { updatePost } from '@/lib/actions/postActions';
 import Image from 'next/image';
 import ImageContainer from '@/components/image-container/ImageContainer';
+import DeletePostForm from '../delete/DelelePostForm';
 
 const SinglePostPage = async ({ params }: { params: any }) => {
   const { id } = params;
@@ -10,7 +11,7 @@ const SinglePostPage = async ({ params }: { params: any }) => {
   const post = await fetchSinglePost(id);
 
   return (
-    <div className='max-w-sm mx-auto '>
+    <div className='max-w-sm mx-auto relative '>
       <h2 className='mt-4 font-semibold text-xl w-fit'>
         Lägg till nytt inlägg
         <span className='block w-full transition-all duration-500 h-1 bg-[#ff4040] mb-4'></span>
@@ -92,6 +93,9 @@ const SinglePostPage = async ({ params }: { params: any }) => {
           Update Post
         </button>
       </form>
+      <div className='absolute bottom-0 right-0 left-auto'>
+     <DeletePostForm id={id} />
+      </div>
     </div>
   );
 };
