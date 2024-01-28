@@ -1,13 +1,14 @@
-import React from 'react'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '../api/auth/[...nextauth]/options'
+'use client';
+import React from 'react';
+import { useSession } from 'next-auth/react';
+import { redirect } from 'next/navigation';
 
 const Home = () => {
-  const session = getServerSession(authOptions)
-  console.log(session)
-  return (
-    <div>Home page where everyone that is logged in comes in</div>
-  )
-}
+  const { data: session } = useSession();
+  if (!session?.user) {
+    redirect('/auth/login');
+  }
+  return <div>Home page where everyone that is logged in comes in</div>;
+};
 
-export default Home
+export default Home;

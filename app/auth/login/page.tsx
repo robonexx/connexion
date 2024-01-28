@@ -33,13 +33,13 @@ const LoginPage: React.FC = () => {
         return;
       }
 
-    /*   console.log(user.name, user.password + ' from submit'); */
+      /*   console.log(user.name, user.password + ' from submit'); */
 
       const res = await signIn('credentials', {
         name: user.name,
         password: user.password,
         redirect: false,
-        
+        callbackUrl: '/',
       });
 
       if (res?.error) {
@@ -53,7 +53,6 @@ const LoginPage: React.FC = () => {
       }
       console.log('submitted form');
       setError('');
-     
     } catch (error) {
       console.log(error);
       setError('Error loggin in check password and name');

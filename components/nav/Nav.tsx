@@ -24,7 +24,7 @@ const Nav = () => {
   };
 
   if (!session?.user) {
-    return <div className='h-[120px]'></div>
+    return <div className='h-[120px]'></div>;
   }
 
   return (
@@ -50,15 +50,16 @@ const Nav = () => {
         <a href='/dashboard/posts/add' className='text-white mx-4'>
           Nytt inlägg
         </a>
-        <a href='#' className='text-white mx-4'>
-          År 1
+        <a href='/students' className='text-white mx-4'>
+          Students
         </a>
-        <a href='#' className='text-white mx-4'>
-          År 2
+        <a href='/teachers' className='text-white mx-4'>
+          Teachers
         </a>
       </div>
 
       {/* Mobile menu */}
+      {/* Adding routes so its testable, when checkeding routes */}
       {isMenuOpen && (
         <div className='md:hidden absolute z-10 top-28 max-w-full transition-all duration-300 flex flex-col px-10 bg-black border-2 rounded-md border-white p-8'>
           <a
@@ -74,16 +75,16 @@ const Nav = () => {
             Nytt inlägg
           </a>
           <a
-            href='/year1'
+            href='/students'
             className='block text-white py-2 px-8 hover:bg-zinc-800 cursor-pointer rounded-md text-xs font-thin'
           >
-            År 1
+            Students
           </a>
           <a
-            href='/year2'
+            href='/teachers'
             className='block text-white py-2 px-8 hover:bg-zinc-800 cursor-pointer rounded-md text-xs font-thin'
           >
-            År 2
+            Teachers
           </a>
         </div>
       )}
