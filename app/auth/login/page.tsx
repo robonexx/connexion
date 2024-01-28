@@ -39,6 +39,7 @@ const LoginPage: React.FC = () => {
         name: user.name,
         password: user.password,
         redirect: false,
+        
       });
 
       if (res?.error) {
@@ -52,7 +53,7 @@ const LoginPage: React.FC = () => {
       }
       console.log('submitted form');
       setError('');
-      router.push('/dashboard');
+     
     } catch (error) {
       console.log(error);
       setError('Error loggin in check password and name');
@@ -62,7 +63,7 @@ const LoginPage: React.FC = () => {
       });
     } finally {
       setLoading(false);
-
+      router.push('/home');
       setUser({
         name: '',
         password: '',
