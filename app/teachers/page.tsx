@@ -5,7 +5,13 @@ import { signOut, useSession } from "next-auth/react";
 import React from 'react'
 
 const Teachers = () => {
-    const {data:session} = useSession();
+  const { data: session } = useSession();
+  
+  console.log('session from dashboard: ', session);
+
+    if (session?.user.role !== "admin" && session?.user.role !== "teacher") {
+      return <h1 className="text-5xl">Access Denied</h1>
+ }
   return (
       <div>
           <h2>Teachers view</h2>

@@ -33,13 +33,13 @@ const LoginPage: React.FC = () => {
         return;
       }
 
-    /*   console.log(user.name, user.password + ' from submit'); */
+      /*   console.log(user.name, user.password + ' from submit'); */
 
       const res = await signIn('credentials', {
         name: user.name,
         password: user.password,
         redirect: false,
-        callbackUrl: '/'
+        callbackUrl: '/',
       });
 
       if (res?.error) {

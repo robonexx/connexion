@@ -63,11 +63,9 @@ const Dashboard = async ({ searchParams }: SearchTypes) => {
 
   const { count, posts } = await fetchPosts(q, page);
 
-
-  if (session?.user.role !== "admin") {
+    if (session?.user.role !== "admin") {
       return <h1 className="text-5xl">Access Denied</h1>
-  }
-  
+ }
 
   return (
     <div className='relative flex min-h-screen h-full w-full flex-col items-center red-gradient py-20 px-20'>

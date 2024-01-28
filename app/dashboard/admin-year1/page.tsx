@@ -16,6 +16,7 @@ interface StudentProps {
 
 const Year1 = async ({ searchParams }: StudentProps) => {
   /*   const classId = 'DC2022'; */
+  // ändrade till start year och sen använder den för att se om eleven är i år ett eller år 2
   const page = searchParams?.page || '1';
 
   const { count, students } = await getStudents(page);

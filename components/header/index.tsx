@@ -16,10 +16,9 @@ const Header = () => {
   return (
     <header className='relative z-10 max-w-full shadow-md pl-0 pr-4 sm:pr-10 bg-black font-[sans-serif] h-[60px] flex justify-between'>
       <Link
-        href='/'
+        href='/home'
         /* className='font-bold bg-[red] h-full w-[230px] border-[1px] border-[#ff4040] grid place-content-center text-white py-4' */
         className='font-bold h-full w-[230px]  grid place-content-center text-white py-4'
-        
       >
         <Image
           className='h-16 w-16 object-contain relative drop-shadow-[5px_5px_10px_#fa4040]'
@@ -57,11 +56,10 @@ const Header = () => {
           >
             Logout
         </button> */}
-        
-          <span className='text-xs tracking-normal px-6 py-10 font-thin text-[#888] hidden md:block'>
-            /show /the /browser /paths
-          </span>
-      
+
+        <span className='text-xs tracking-normal px-6 py-10 font-thin text-[#888] hidden md:block'>
+          /show /the /browser /paths
+        </span>
       </div>
     </header>
   );
