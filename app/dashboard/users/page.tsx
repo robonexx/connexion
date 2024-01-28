@@ -43,7 +43,7 @@ const Users = async ({ searchParams }: UsersProps) => {
                 createdAt={createdAt}
                 role={role}
                 image={image}
-                id={_id.toString()}
+                id={_id}
               />
             ),
           )
