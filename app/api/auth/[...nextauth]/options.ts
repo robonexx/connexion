@@ -31,7 +31,7 @@ export const authOptions: AuthOptions = {
         if (!isMatch) {
           throw new Error('Invalid password');
         }
-        console.log('user from mongodb: ', user)
+      /*   console.log('user from mongodb: ', user) */
         return user;
       },
     }),
@@ -40,7 +40,7 @@ export const authOptions: AuthOptions = {
 
   callbacks: {
     async jwt ({ token, user, session }) {
-      console.log('jwt callback', {token, user, session})
+   /*    console.log('jwt callback', {token, user, session}) */
       if (user) {
         return {
           ...token,
@@ -51,7 +51,7 @@ export const authOptions: AuthOptions = {
       return token;
     },
     async session({ session, token, user }) {
-      console.log('session callback: ', { session, token, user });
+    /*   console.log('session callback: ', { session, token, user }); */
       return {
         ...session,
         user: {

@@ -2,7 +2,7 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import User from '../models/User';
-/* import bcrypt from 'bcrypt'; */
+import bcrypt from 'bcrypt';
 import { connectToDB } from '../db';
 
 // could use zod like many seems to do to check types
@@ -31,31 +31,36 @@ export const addUser = async (prevState: any, formData: FormData) => {
     connectToDB();
 
     // extracting the password as a string from the formdata
-    /* const extractedPassword: string = password as string; */
+    let hashedPassword: string | undefined;
 
-    // adding the hashed password
-   /*  const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(extractedPassword, salt); */
+    if (password) {
+      const extractedPassword: string = password as string;
+  
+      // adding the hashed password
+      hashedPassword = await bcrypt.hash(extractedPassword, 10);
+    }
 
     // creating the new user
     const newUser = new User({
       fullname,
       name,
       email,
-      password,
+      password: hashedPassword,
       role,
       startYear,
       desc,
     });
     await newUser.save();
-   
-    return { message: 'User added: ', name }
     revalidatePath("/dashboard/users");
-    redirect('/dashboard/users')
+    return { message: 'User added: ', name }
+   
+   
    
   } catch (err) {
     console.log(err);
     return { error: "Failed to add user!" };
+  } finally {
+    redirect('/dashboard/users')
   }
 
 };
@@ -76,7 +81,14 @@ export const updateUser = async (formData: FormData) => {
   const { id, fullname, name, email, password, role, startYear, desc } =
     Object.fromEntries(formData);
   
-  console.log('the id from update params: ', id + 'for user: ', name)
+    let hashedPassword: string | undefined;
+
+    if (password) {
+      const extractedPassword: string = password as string;
+  
+      // adding the hashed password
+      hashedPassword = await bcrypt.hash(extractedPassword, 10);
+    }
 
   try {
     connectToDB();
@@ -86,7 +98,7 @@ export const updateUser = async (formData: FormData) => {
       fullname: fullname as any,
       name: name as any,
       email: email as any,
-      password: password as any,
+      password: hashedPassword as any,
       role: role as any,
       startYear: startYear as any,
       desc: desc as any,
@@ -107,11 +119,12 @@ export const updateUser = async (formData: FormData) => {
     // Update the user
     await User.findByIdAndUpdate(id, updatedFields);
     revalidatePath("/dashboard/users");
-    redirect('/dashboard/users')
     return { message: 'Updated added: ', name };   
   } catch (err) {
     console.log(err);
     return { error: "Failed to update user!" };
+  } finally {
+    redirect('/dashboard/users')
   }
 };
 
@@ -119,10 +132,9 @@ export const updateUser = async (formData: FormData) => {
 // DELETE USER (DELETE)
 export const deleteUser = async (formData: FormData) => {
   const { id } = Object.fromEntries(formData);
-
   try {
     connectToDB();
-    await User.findByIdAndDelete(id);
+    await User.findByIdAndDelete({ _id: id });
     console.log('User with the id:', id + ' was deleted succcessfully');
     revalidatePath("/dashboard/users");
     redirect('/dashboard/users')
