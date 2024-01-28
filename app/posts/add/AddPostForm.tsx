@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useFormState } from 'react-dom';
-import { addPostWithFireBase } from '@/lib/actions/postActions';
+import { addPost } from '@/lib/actions/postActions';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import SubmitButton from '@/components/submit-button/SubmitButton';
@@ -11,7 +11,7 @@ import SubmitButton from '@/components/submit-button/SubmitButton';
 
 const AddPostForm: React.FC = (previousState: any, formData: FormData) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [state, formAction] = useFormState(addPostWithFireBase, undefined);
+  const [state, formAction] = useFormState(addPost, undefined);
 
   const { data: session } = useSession();
   const router = useRouter();
@@ -38,7 +38,6 @@ const AddPostForm: React.FC = (previousState: any, formData: FormData) => {
   return (
     <form action={formAction} className='mb-5' ref={formRef}>
       <input type='hidden' name='id' value={session?.user.id} />
-    {/*   <CldUploadButton uploadPreset={process.env.CLD_PRESET} /> */}
        <div className='mb-5'>
         <label htmlFor='title' className='block text-sm font-medium text-white'>
           Image

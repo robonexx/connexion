@@ -15,8 +15,6 @@ const AddPostForm: React.FC = (previousState: any, formData: FormData) => {
   const { data: session } = useSession();
   const router = useRouter();
 
-  console.log(session?.user._id);
-
   const ref = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
@@ -38,7 +36,7 @@ const AddPostForm: React.FC = (previousState: any, formData: FormData) => {
 
   return (
     <form action={formAction} className='mb-5'>
-      <input type='hidden' name='id' value={session?.user._id} />
+      <input type='hidden' name='id' value={session?.user.id} />
       <div className='mb-5'>
         <label htmlFor='title' className='block text-sm font-medium text-white'>
           Image

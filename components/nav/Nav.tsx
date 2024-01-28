@@ -47,7 +47,7 @@ const Nav = () => {
         <a href='/dashboard' className='text-white mx-4'>
           Dashboard
         </a>
-        <a href='/dashboard/posts/add' className='text-white mx-4'>
+        <a href='/posts/add' className='text-white mx-4'>
           Nytt inlägg
         </a>
         <a href='/students' className='text-white mx-4'>
@@ -69,7 +69,7 @@ const Nav = () => {
             <span className='group-hover:translate-x-4'>Dashboard</span>
           </a>
           <a
-            href='/dashboard/posts/add'
+            href='/posts/add'
             className='block text-white py-2 px-8 hover:bg-zinc-800 cursor-pointer rounded-md text-xs font-thin'
           >
             Nytt inlägg
