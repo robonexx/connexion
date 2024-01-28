@@ -2,7 +2,7 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import User from '../models/User';
-/* import bcrypt from 'bcrypt'; */
+import bcrypt from 'bcrypt';
 import { connectToDB } from '../db';
 
 // could use zod like many seems to do to check types
@@ -31,18 +31,16 @@ export const addUser = async (prevState: any, formData: FormData) => {
     connectToDB();
 
     // extracting the password as a string from the formdata
-    /* const extractedPassword: string = password as string; */
+    const extractedPassword: string = password as string;
 
-    // adding the hashed password
-   /*  const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(extractedPassword, salt); */
+    const hashedPassword = await bcrypt.hash(extractedPassword, 10);
 
     // creating the new user
     const newUser = new User({
       fullname,
       name,
       email,
-      password,
+      password: hashedPassword,
       role,
       startYear,
       desc,
