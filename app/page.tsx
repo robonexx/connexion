@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Logo from "./_components/Logo";
 
-const Home = async () => {
+const Landing = async () => {
 
   return (
     <main className="flex min-h-screen flex-col items-center py-24 px-8 md:px-20">
@@ -15,4 +15,4 @@ const Home = async () => {
   );
 }
 
-export default Home
+export default Landing

@@ -4,8 +4,8 @@ import CustomLink from '@/components/custom-link/CustomLink';
 import Pagination from '@/components/pagination/Pagination';
 import { fetchPosts } from '@/lib/data/postLoader';
 import Post from '@/components/posts/Post';
-
-// mockData will be updated to data from db
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/options';
 
 type SearchTypes = {
   searchParams: {
@@ -15,10 +15,21 @@ type SearchTypes = {
 };
 
 const Posts = async ({ searchParams }: SearchTypes) => {
+  const session = await getServerSession(authOptions);
+  if (!session?.user && session?.user.role !== 'admin') {
+    return {
+      redirect: {
+        destination: '/unauthorized',
+        permanent: false,
+      },
+    };
+  }
+
   const q = searchParams?.q || '';
   const page = searchParams?.page || '1';
 
   const { count, posts } = await fetchPosts(q, page);
+
   return (
     <div className='relative flex min-h-screen h-full w-full flex-col items-center mt-20 red-gradient'>
       <h1>Post Page!</h1>

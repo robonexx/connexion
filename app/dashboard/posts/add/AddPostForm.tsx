@@ -12,16 +12,22 @@ const AddPostForm: React.FC = (previousState: any, formData: FormData) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [state, formAction] = useFormState(addPost, undefined);
 
-  const { data: session } = useSession();
-  const router = useRouter();
-
-  console.log(session?.user._id);
-
   const ref = useRef<HTMLFormElement>(null);
-
+  const router = useRouter();
   useEffect(() => {
     state?.message && router.push('/dashboard/posts');
   }, [state?.message, router]);
+
+  const { data: session, status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      router.push('/unauthorized');
+    },
+  });
+
+  if (status === 'loading') {
+    return 'Loading or not authenticated...';
+  }
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

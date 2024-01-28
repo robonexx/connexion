@@ -39,8 +39,8 @@ export const authOptions: AuthOptions = {
   /* debug: process.env.NODE_ENV === 'development', */
 
   callbacks: {
-    async jwt ({ token, user, session }) {
-      console.log('jwt callback', {token, user, session})
+    async jwt({ token, user, session }) {
+      console.log('jwt callback', { token, user, session })
       if (user) {
         return {
           ...token,
@@ -62,16 +62,6 @@ export const authOptions: AuthOptions = {
       }
       return session;
     },
-    async signIn({ user, account, profile, email, credentials }) {
-      const isAllowedToSignIn = true
-      if (isAllowedToSignIn) {
-        return true
-      } else {
-       
-        return false
-        
-      }
-    }
   },
   secret: process.env.NEXTAUTH_SECRET,
   session: {

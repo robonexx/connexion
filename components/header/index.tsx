@@ -35,7 +35,7 @@ const Header = () => {
           {session && (
             <CustomLink
               href='/'
-              onClick={() => signOut()}
+              onClick={() => signOut({ callbackUrl: '/', redirect: true })}
               className='text-xl font-thin'
             >
               Sign out <IoMdLogOut className='mx-1' />
@@ -58,7 +58,7 @@ const Header = () => {
         </button> */}
 
         <span className='text-xs tracking-normal px-6 py-10 font-thin text-[#888] hidden md:block'>
-          /show /the /browser /paths
+          /show /the /browser /paths / not / added / yet... 😜
         </span>
       </div>
     </header>
