@@ -84,7 +84,7 @@ const Post = ({
       </div>
 
       <Link
-        href={`/dashboard/posts/${_id}`}
+        href={`/posts/${_id}`}
         title=''
         className='text-white text-xl w-fit absolute right-2 bottom-2 top-auto flex items-center'
       >
