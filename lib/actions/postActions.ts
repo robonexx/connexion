@@ -177,6 +177,7 @@ export const deletePost = async (formData: FormData) => {
   try {
     connectToDB();
     await Post.findByIdAndDelete(id);
+    redirect('posts')
     console.log('Your post was deleted succcessfully');
   } catch (err) {
     console.log(err);

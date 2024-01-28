@@ -40,12 +40,7 @@ const Post = ({
 
       <div className='w-full h-72 relative'>
         {image ? (
-          <Image
-            src={image}
-            alt={title}
-            fill
-            className='object-cover rounded-md object-center'
-          />
+          <ImageContainer imageData={image} />
         ) : (
           <Image
             src={'/thumbnail-placeholder.png'}
@@ -89,7 +84,7 @@ const Post = ({
       </div>
 
       <Link
-        href={`/dashboard/posts/${_id}`}
+        href={`/posts/${_id}`}
         title=''
         className='text-white text-xl w-fit absolute right-2 bottom-2 top-auto flex items-center'
       >

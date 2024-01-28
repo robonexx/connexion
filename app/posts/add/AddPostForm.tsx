@@ -5,7 +5,8 @@ import { useFormState } from 'react-dom';
 import { addPostWithFireBase } from '@/lib/actions/postActions';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
-
+import SubmitButton from '@/components/submit-button/SubmitButton';
+/* import toast from 'react-hot-toast' */
 
 
 const AddPostForm: React.FC = (previousState: any, formData: FormData) => {
