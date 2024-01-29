@@ -3,29 +3,64 @@
 
 # DC APP - EXAM
 
-[Link to the website.](https://dev-dcapp.vercel.app)
+### [Link to the website.](https://dev-dcapp.vercel.app)
 
-So on the page you can sign up for now, will be removed
+On the page you can sign up for now, will be removed
 to try out all passwords for now is test123
-name        role
-rupert      admin
-student1    student
-teach1      teacher
 
-so admin should be able to enter all pages
+```sh
+name        password    role
+---------------------------------
+rupert      test123     admin
+student1    test123     student
+teach1      test123     teacher
+```
 
-students should not be able to enter /teachers or /dashboard
-teachers should not be able to enter /students or /dashboard
 
-everyone can enter / /login /signup
+ should be able to enter all pages
 
-authenticated user can enter /home
+```sh
+Role            access                                      No access
+admin           all                             
+student         /   /students   /posts      /posts/add      /dashboard  /teachers   
+teacher         /   /teachers   /posts      /posts/add      /dashboard  /students
 
-(thats about it for now, more to be added, pages for differetn classes, notes page, setting and profile for each user to be entered with their own content and info)
+```
 
-everyone should be able to add posts /posts
+```sh
+everyone 
+/login 
+/signup
 
-admin should be able to add user and update them also delete the users
+```
+
+```sh
+unauthenticated no access to 
+/home 
+/dashboard
+/students
+/teachers
+
+```
+
+```sh
+admin 
+- should be able to add user and update them also delete the users in the dashboard
+
+```
+
+Everyone can access to see and create posts / the security is not setup yet
+- it will error out on creating post, due to no auth or id available in post creation
+
+
+
+### thats about it for now 
+- more to be added, 
+- pages for differetn classes, 
+- notes page, 
+- setting and profile for each user to be entered with their own content and info
+
+
 
 Focus was on creating a prototype and to learn role based authentication
 This project will continue and be released in august of 2024 as a communication app 
