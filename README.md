@@ -77,7 +77,7 @@ This project will continue and be released in august of 2024 as a communication 
 
 ## What I Learned?
 
-Started to learn auth, how to secure routes and make them role based
+Started to learn role based auth, how to secure routes and make them role based
 Next-Auth login and singup
 Server actions
 More Tailwind
