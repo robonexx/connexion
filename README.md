@@ -8,6 +8,12 @@
 On the page you can sign up for now, will be removed
 to try out all passwords for now is test123
 
+
+Some heads up
+The read me page of the posts for now works as a update /delete post, i combined it due to my idea not being 100% ready
+The single post page is an easy implementation, the functions update delete was more important in this case testing the prototype
+
+
 ```sh
 name        password    role
 ---------------------------------
@@ -20,7 +26,7 @@ teach1      test123     teacher
  should be able to enter all pages
 
 ```sh
-Role            access                                      No access
+Role            Access                                      No-access
 admin           all                             
 student         /   /students   /posts      /posts/add      /dashboard  /teachers   
 teacher         /   /teachers   /posts      /posts/add      /dashboard  /students
@@ -35,7 +41,7 @@ everyone
 ```
 
 ```sh
-unauthenticated no access to 
+Unauthenticated no access to 
 /home 
 /dashboard
 /students
